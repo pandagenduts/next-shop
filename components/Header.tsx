@@ -8,8 +8,7 @@ import {
   NavigationMenuList,
   navigationMenuTriggerStyle,
 } from './ui/navigation-menu';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from './ui/dropdown-menu';
-import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
+import UserAccountNav from './auth/UserAccountNav';
 
 const menu = [
   {
@@ -24,9 +23,16 @@ const menu = [
 
 export default function Header() {
   return (
-    <header className='flex items-center justify-between'>
-      <h1>NextShop</h1>
-      <div>
+    <header className='flex items-center justify-between py-4'>
+      <Link href='/'>
+        <p className='text-2xl font-light'>NextShop</p>
+      </Link>
+
+      <div className='sm:hidden'>
+      
+      </div>
+
+      <div className='hidden sm:block'>
         <NavigationMenu>
           <NavigationMenuList>
             {menu.map((menu) => (
@@ -41,23 +47,9 @@ export default function Header() {
           </NavigationMenuList>
         </NavigationMenu>
       </div>
+
       <div>
-      <DropdownMenu>
-          <DropdownMenuTrigger className='outline-none'>
-            <Avatar className='cursor-pointer'>
-              <AvatarImage src='https://github.com/shadcn.png' />
-              <AvatarFallback>CN</AvatarFallback>
-            </Avatar>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align='end'>
-            <DropdownMenuLabel>My Account</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>Profile</DropdownMenuItem>
-            <DropdownMenuItem>Billing</DropdownMenuItem>
-            <DropdownMenuItem>Team</DropdownMenuItem>
-            <DropdownMenuItem>Subscription</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <UserAccountNav />
       </div>
     </header>
   );
