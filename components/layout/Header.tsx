@@ -11,6 +11,8 @@ import {
 import UserAccountNav from '../auth/UserAccountNav';
 import MobileMenu from './MobileMenu';
 import { navMenu } from '@/lib/config';
+import CartButton from '../cart/CartButton';
+
 
 export default function Header() {
   return (
@@ -38,7 +40,8 @@ export default function Header() {
         </NavigationMenu>
       </div>
 
-      <div>
+      <div className='flex items-center gap-4'>
+        <CartButton />
         <UserAccountNav />
       </div>
     </header>

@@ -10,7 +10,11 @@ import {
 } from '../ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import Link from 'next/link';
-import { User as UserIcon, Package as PackageIcon, LogOut as LogOutIcon } from 'lucide-react';
+import {
+  User as UserIcon,
+  Package as PackageIcon,
+  LogOut as LogOutIcon,
+} from 'lucide-react';
 
 const menu = [
   {
@@ -28,7 +32,7 @@ const menu = [
 export default function UserAccountNav() {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className='outline-none'>
+      <DropdownMenuTrigger className='outline-none' asChild>
         <Avatar className='cursor-pointer'>
           <AvatarImage src='https://github.com/shadcn.png' />
           <AvatarFallback>CN</AvatarFallback>
@@ -46,7 +50,10 @@ export default function UserAccountNav() {
           </DropdownMenuItem>
         ))}
         <DropdownMenuSeparator />
-        <DropdownMenuItem className='cursor-pointer'><LogOutIcon className='mr-2 h-4 w-4' />Sign Out</DropdownMenuItem>
+        <DropdownMenuItem className='cursor-pointer'>
+          <LogOutIcon className='mr-2 h-4 w-4' />
+          Sign Out
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
