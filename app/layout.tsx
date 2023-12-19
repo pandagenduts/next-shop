@@ -17,10 +17,16 @@ export default function RootLayout({
 }) {
   return (
     <html lang='en'>
-      <body className={cn(
-          "min-h-screen bg-background font-sans antialiased",
-          inter.variable
-        )}>{children}</body>
+      <body
+        className={cn(
+          'min-h-screen bg-background font-sans antialiased',
+          inter.variable,
+        )}
+      >
+        <div id='web-wrapper' className='container'>
+          {children}
+        </div>
+      </body>
     </html>
   );
 }
