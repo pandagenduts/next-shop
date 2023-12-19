@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import { cn } from '@/lib/utils';
 import { ThemeProvider } from '@/components/theme-provider';
+import Header from '@/components/Header';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
@@ -31,6 +32,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <div id='web-wrapper' className='container'>
+            <Header />
             {children}
           </div>
         </ThemeProvider>
