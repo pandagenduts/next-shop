@@ -9,19 +9,8 @@ import {
   navigationMenuTriggerStyle,
 } from '../ui/navigation-menu';
 import UserAccountNav from '../auth/UserAccountNav';
-
 import MobileMenu from './MobileMenu';
-
-const menu = [
-  {
-    title: 'Home',
-    href: '/',
-  },
-  {
-    title: 'Shop',
-    href: '/shop',
-  },
-];
+import { navMenu } from '@/lib/config';
 
 export default function Header() {
   return (
@@ -30,20 +19,13 @@ export default function Header() {
         <MobileMenu />
         
         <Link href='/' className='hidden md:block'>
-          <p className='text-2xl font-light'>NextShop</p>
+          <p className='text-2xl font-bold'>NextShop</p>
         </Link>
       </div>
-
-      <div className='md:hidden'>
-        <Link href='/'>
-          <p className='text-xl font-light'>NextShop</p>
-        </Link>
-      </div>
-
       <div className='hidden md:block'>
         <NavigationMenu>
           <NavigationMenuList>
-            {menu.map((menu) => (
+            {navMenu.map((menu) => (
               <NavigationMenuItem key={menu.title}>
                 <Link href={menu.href} legacyBehavior passHref>
                   <NavigationMenuLink className={navigationMenuTriggerStyle()}>

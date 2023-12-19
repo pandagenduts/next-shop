@@ -38,7 +38,7 @@ export default function UserAccountNav() {
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
         {menu.map((menu) => (
-          <DropdownMenuItem>
+          <DropdownMenuItem key={menu.title}>
             <Link href={menu.href} className='flex'>
               <menu.icon className='mr-2 h-4 w-4' />
               {menu.title}
