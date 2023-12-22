@@ -1,20 +1,15 @@
 'use client';
 
 import Link from 'next/link';
-import {
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  navigationMenuTriggerStyle,
-} from '../ui/navigation-menu';
 import UserAccountNav from '../auth/UserAccountNav';
 import MobileMenu from './MobileMenu';
-import { navMenu } from '@/lib/config';
 import CartButton from '../cart/CartButton';
+import DesktopMenu from './DesktopMenu';
 
 
 export default function Header() {
+
+
   return (
     <header className='flex items-center justify-between py-4'>
       <div className='flex items-center gap-2'>
@@ -25,19 +20,7 @@ export default function Header() {
         </Link>
       </div>
       <div className='hidden md:block'>
-        <NavigationMenu>
-          <NavigationMenuList>
-            {navMenu.map((menu) => (
-              <NavigationMenuItem key={menu.title}>
-                <Link href={menu.href} legacyBehavior passHref>
-                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                    {menu.title}
-                  </NavigationMenuLink>
-                </Link>
-              </NavigationMenuItem>
-            ))}
-          </NavigationMenuList>
-        </NavigationMenu>
+        <DesktopMenu />
       </div>
 
       <div className='flex items-center gap-4'>

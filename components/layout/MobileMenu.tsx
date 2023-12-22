@@ -1,20 +1,20 @@
-'use client';
+'use client'
 
-import { Menu as MenuIcon } from 'lucide-react';
+import { Menu as MenuIcon } from 'lucide-react'
 import {
   Sheet,
   SheetContent,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from '@/components/ui/sheet';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { navMenu } from '@/lib/config';
-import { cn } from '@/lib/utils';
+} from '@/components/ui/sheet'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { navMenu } from '@/lib/config'
+import { cn } from '@/lib/utils'
 
 export default function MobileMenu() {
-  const pathName = usePathname();
+  const pathName = usePathname()
 
   return (
     <Sheet>
@@ -25,11 +25,11 @@ export default function MobileMenu() {
         <SheetHeader className='mb-8'>
           <SheetTitle>
             <Link href='/'>
-              <p className='text-xl font-bold text-left'>NextShop</p>
+              <p className='text-left text-xl font-bold'>NextShop</p>
             </Link>
           </SheetTitle>
         </SheetHeader>
-        <ul className='text-sm flex flex-col gap-4'>
+        <ul className='flex flex-col gap-4 text-sm'>
           {navMenu.map((menu) => (
             <li key={menu.title}>
               <Link
@@ -43,5 +43,5 @@ export default function MobileMenu() {
         </ul>
       </SheetContent>
     </Sheet>
-  );
+  )
 }
