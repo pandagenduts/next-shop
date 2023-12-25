@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import {
   DropdownMenu,
@@ -7,14 +7,14 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '../ui/dropdown-menu';
-import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
-import Link from 'next/link';
+} from '../ui/dropdown-menu'
+import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
+import Link from 'next/link'
 import {
   User as UserIcon,
   Package as PackageIcon,
   LogOut as LogOutIcon,
-} from 'lucide-react';
+} from 'lucide-react'
 
 const menu = [
   {
@@ -27,7 +27,7 @@ const menu = [
     href: '/profile/orders',
     icon: PackageIcon,
   },
-];
+]
 
 export default function UserAccountNav() {
   return (
@@ -56,5 +56,5 @@ export default function UserAccountNav() {
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
-  );
+  )
 }

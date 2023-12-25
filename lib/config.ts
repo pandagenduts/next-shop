@@ -7,4 +7,5 @@ export const navMenu = [
     title: 'Shop',
     href: '/shop',
   },
-];
+]
+

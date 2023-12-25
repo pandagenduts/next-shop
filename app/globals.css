@@ -75,3 +75,18 @@
   }
 }
 
+h1 {
+  @apply text-lg font-semibold;
+}
+
+h2 {
+  @apply text-base font-semibold;
+}
+
+h3 {
+  @apply text-base font-semibold;
+}
+
+h4 {
+  @apply font-semibold;
+}
