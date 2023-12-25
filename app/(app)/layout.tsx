@@ -23,9 +23,9 @@ export default function layout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
 
   return (
-    <div className='flex flex-col gap-10 pt-4 md:flex-row'>
+    <div className='flex flex-col gap-5 md:gap-10 pt-4 md:flex-row'>
       <div className='flex-1  md:max-w-[200px]'>
-        <h1 className='mb-2'>Menu</h1>
+        <h1 className='hidden md:block mb-2'>Menu</h1>
         <div className='flex gap-1 overflow-auto md:flex-col md:overflow-visible'>
           {profileMenu.map((menu) => (
             <Button
@@ -42,6 +42,7 @@ export default function layout({ children }: { children: React.ReactNode }) {
           ))}
         </div>
       </div>
+      <Separator className='block md:hidden' />
       <div className='flex-1'>{children}</div>
     </div>
   )
