@@ -1,6 +1,6 @@
-'use client';
+'use client'
 
-import { ShoppingCart as ShoppingCartIcon } from 'lucide-react';
+import { ShoppingCart as ShoppingCartIcon } from 'lucide-react'
 import {
   Sheet,
   SheetContent,
@@ -8,9 +8,9 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from '@/components/ui/sheet';
-import { Button } from '../ui/button';
-import CartItem from './CartItem';
+} from '@/components/ui/sheet'
+import { Button } from '../ui/button'
+import CartItem from './CartItem'
 
 export default function CartButton() {
   return (
@@ -21,7 +21,7 @@ export default function CartButton() {
           <span>0</span>
         </Button>
       </SheetTrigger>
-      <SheetContent className='flex flex-col w-full min-[500px]:max-w-sm'>
+      <SheetContent className='flex w-full flex-col min-[500px]:max-w-sm sm:max-w-md'>
         <SheetHeader className='mb-4'>
           <SheetTitle>Cart</SheetTitle>
           <SheetDescription>Cart is empty</SheetDescription>
@@ -34,11 +34,15 @@ export default function CartButton() {
           </div>
 
           <div>
-            <p className='text-right mb-4'>Total: Rp 0,-</p>
+            <div className='mb-5 flex justify-between '>
+              <span>Subtotal</span>
+              <p className='text-right'>Rp 0,-</p>
+            </div>
+            <p className='mb-5 text-xs text-gray-500 text-center'>Shipping, taxes, and discount codes calculated at checkout.</p>
             <Button className='w-full'>Checkout</Button>
           </div>
         </div>
       </SheetContent>
     </Sheet>
-  );
+  )
 }
