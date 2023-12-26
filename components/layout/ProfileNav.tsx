@@ -1,22 +1,9 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
-import { User, Package } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-
-const profileMenu = [
-  {
-    title: 'Profile',
-    href: '/profile',
-    icon: User,
-  },
-  {
-    title: 'Orders',
-    href: '/profile/orders',
-    icon: Package,
-  },
-]
+import { profileMenu } from '@/lib/config'
 
 export default function ProfileNav() {
   const pathname = usePathname()
