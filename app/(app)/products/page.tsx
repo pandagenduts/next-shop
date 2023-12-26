@@ -10,7 +10,7 @@ export default function Page() {
 
       <div className='grid grid-cols-2 gap-6 md:grid-cols-4'>
         {allProducts?.map((product) => (
-          <div>
+          <div key={product.id}>
             <Link href={`/products/${product.slug}`}>
               <div className='relative'>
                 <Image

@@ -4,9 +4,12 @@ import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { profileMenu } from '@/lib/config'
+import { isOrderDetails } from '@/lib/utils'
 
 export default function ProfileNav() {
   const pathname = usePathname()
+
+  const urlSplit = pathname.split('/')
 
   return (
     <div className='flex gap-1 overflow-auto md:flex-col md:overflow-visible'>
