@@ -1,10 +1,12 @@
 import { Button } from '@/components/ui/button'
 import { ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
+import { allProducts } from '@/data/data'
 
-export default function Page({ params }: { params: { slug: string } }) {
+export default async function Page({ params }: { params: { slug: string } }) {
   const { slug } = params
-  console.log(slug)
+  const getProduct = allProducts.filter((product) => product.slug === slug)
+  const { name, price, description, gallery, hot } = getProduct[0]
 
   return (
     <>
@@ -14,7 +16,8 @@ export default function Page({ params }: { params: { slug: string } }) {
           Back
         </Link>
       </Button>
-      <h1>hello world</h1>
+      <h1>{name}</h1>
+      
     </>
   )
 }

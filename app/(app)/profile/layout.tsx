@@ -14,7 +14,7 @@ export default function layout({ children }: { children: React.ReactNode }) {
   const orderDetailsPage = isOrderDetails(urlSplit)
 
   return (
-    <div className='flex flex-col gap-5 pt-4 md:flex-row md:gap-10'>
+    <div className='flex flex-col gap-5 md:flex-row md:gap-10'>
       <div
         className={cn(
           'flex-1 md:max-w-[200px]',
