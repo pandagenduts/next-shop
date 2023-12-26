@@ -6,7 +6,12 @@ import { Badge } from '@/components/ui/badge'
 export default function Page() {
   return (
     <>
-      <h1 className='mb-8 md:mt-10'>Shop Page</h1>
+      <div className='flex gap-4 mt-5 mb-10 md:mt-0'>
+        <Link href='/'>Home</Link>
+        <span>/</span>
+        <p className='text-gray-500'>Products</p>
+      </div>
+      <h1 className='mb-8'>Products</h1>
 
       <div className='grid grid-cols-2 gap-6 md:grid-cols-4'>
         {allProducts?.map((product) => (
@@ -29,7 +34,7 @@ export default function Page() {
               <p className='mb-1 text-center text-sm lg:text-lg'>
                 {product.name}
               </p>
-              <p className='text-xs text-center'>{product.price}</p>
+              <p className='text-center text-xs lg:text-sm'>{product.price}</p>
             </Link>
           </div>
         ))}
