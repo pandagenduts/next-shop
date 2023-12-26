@@ -1,10 +1,6 @@
-'use client'
-
-import { Button } from '@/components/ui/button'
+import ProfileNav from '@/components/layout/ProfileNav'
 import { Separator } from '@/components/ui/separator'
 import { User, Package } from 'lucide-react'
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
 
 const profileMenu = [
   {
@@ -20,13 +16,11 @@ const profileMenu = [
 ]
 
 export default function layout({ children }: { children: React.ReactNode }) {
-  const pathname = usePathname()
-
   return (
     <div className='flex flex-col gap-5 md:gap-10 pt-4 md:flex-row'>
       <div className='flex-1  md:max-w-[200px]'>
         <h1 className='hidden md:block mb-2'>Menu</h1>
-        <div className='flex gap-1 overflow-auto md:flex-col md:overflow-visible'>
+        {/* <div className='flex gap-1 overflow-auto md:flex-col md:overflow-visible'>
           {profileMenu.map((menu) => (
             <Button
               variant={pathname === menu.href ? 'secondary' : 'ghost'}
@@ -40,7 +34,8 @@ export default function layout({ children }: { children: React.ReactNode }) {
               </Link>
             </Button>
           ))}
-        </div>
+        </div> */}
+        <ProfileNav />
       </div>
       <Separator className='block md:hidden' />
       <div className='flex-1'>{children}</div>

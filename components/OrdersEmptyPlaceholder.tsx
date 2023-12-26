@@ -5,7 +5,7 @@ export default function OrdersEmptyPlaceholder() {
     <>
       <PackageX className='h-8 w-8' strokeWidth={1} />
       <p>
-        Whoops, looks like you haven't placed any orders yet :( <br />
+        Whoops, looks like you haven&rsquo;t placed any orders yet :( <br />
         Start shopping to see your orders here! ^^
       </p>
     </>

@@ -1,12 +1,13 @@
 import { Minus, Plus } from 'lucide-react'
 import { Button } from '../ui/button'
+import Image from 'next/image'
 
 export default function CartItem() {
   return (
     <div className='flex gap-4'>
       <div className='max-w-[90px]'>
         <a href='/'>
-          <img src='/product-1.webp' alt='product-img' />
+          <Image src='/product-1.webp' width={90} height={90} alt='product-img' className='object-cover' />
         </a>
       </div>
       <div className='flex flex-1 flex-col justify-between'>

@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
 import { ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
+import Image from 'next/image'
 
 export default function page({ params }: { params: { order_id: string } }) {
   const { order_id } = params
@@ -22,11 +23,7 @@ export default function page({ params }: { params: { order_id: string } }) {
         <Card>
           <CardHeader className='p-4'>
             <div className='flex gap-4'>
-              <img
-                src='/product-1.webp'
-                alt='product-img'
-                className='max-w-[100px]'
-              />
+            <Image src='/product-1.webp' width={100} height={100} alt='product-img' className='object-cover' />
               <div className=''>
                 <p className='text-base font-bold'>Product Title</p>
                 <p>1 x Rp 123.000,-</p>

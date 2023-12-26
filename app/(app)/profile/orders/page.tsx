@@ -2,6 +2,7 @@ import OrdersEmptyPlaceholder from '@/components/OrdersEmptyPlaceholder'
 import { Badge } from '@/components/ui/badge'
 import { Separator } from '@/components/ui/separator'
 import Link from 'next/link'
+import Image from 'next/image'
 
 export default function Page() {
   return (
@@ -10,7 +11,7 @@ export default function Page() {
         <Link href='/profile/orders/1'>
           <div className='flex w-full gap-4 rounded-lg border p-4'>
             <div className='max-w-[70px] md:max-w-[150px]'>
-              <img src='/product-1.webp' alt='product-img' />
+              <Image src='/product-1.webp' width={150} height={150} alt='product-img' className='object-cover' />
             </div>
             <div className='flex flex-1 flex-col'>
               <div className='mb-1 flex justify-between'>
