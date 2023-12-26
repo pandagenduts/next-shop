@@ -1,19 +1,5 @@
 import ProfileNav from '@/components/layout/ProfileNav'
 import { Separator } from '@/components/ui/separator'
-import { User, Package } from 'lucide-react'
-
-const profileMenu = [
-  {
-    title: 'Profile',
-    href: '/profile',
-    icon: User,
-  },
-  {
-    title: 'Orders',
-    href: '/profile/orders',
-    icon: Package,
-  },
-]
 
 export default function layout({ children }: { children: React.ReactNode }) {
   return (

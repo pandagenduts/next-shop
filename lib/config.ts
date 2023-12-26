@@ -7,8 +7,8 @@ export const navMenu = [
     href: '/',
   },
   {
-    title: 'Shop',
-    href: '/shop',
+    title: 'Products',
+    href: '/products',
   },
 ]
 
