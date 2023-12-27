@@ -5,7 +5,7 @@ export const allProducts = [
     slug: 'corsa-classic-white-navy',
     hot: true,
     featured: true,
-    price: 'Rp 428.000,-',
+    price: 428000,
     description:
       'Menjadi sepatu “lifestyle” yang memberikan kesan klasik dengan menggunakan kombinasi material yang breathable dengan semi suede yang bikin adem dan outsole barunya dengan teknologi phylon rubber yang ringan, kenyal dan empuk namun tetap anti slip saat digunakan membuat sneakers ini sangat nyaman dan enak dipakai seharian.',
     thumbnail: '/products/classic-1.webp',
@@ -23,7 +23,7 @@ export const allProducts = [
     slug: 'corsa-classic-black-white',
     hot: false,
     featured: true,
-    price: 'Rp 398.000,-',
+    price: 398000,
     description:
       'Menjadi sepatu “lifestyle” yang memberikan kesan klasik dengan menggunakan kombinasi material yang breathable dengan semi suede yang bikin adem dan outsole barunya dengan teknologi phylon rubber yang ringan, kenyal dan empuk namun tetap anti slip saat digunakan membuat sneakers ini sangat nyaman dan enak dipakai seharian.',
     thumbnail: '/products/corsa-1.webp',
@@ -41,7 +41,7 @@ export const allProducts = [
     slug: 'corte-mid-full-black',
     hot: true,
     featured: true,
-    price: 'Rp 297.000,-',
+    price: 297000,
     description:
       'Menjadi sepatu “lifestyle” yang memberikan kesan klasik dengan menggunakan kombinasi material yang breathable dengan semi suede yang bikin adem dan outsole barunya dengan teknologi phylon rubber yang ringan, kenyal dan empuk namun tetap anti slip saat digunakan membuat sneakers ini sangat nyaman dan enak dipakai seharian.',
     thumbnail: '/products/corte-1.webp',
@@ -59,7 +59,7 @@ export const allProducts = [
     slug: 'corte-jog-full-white-gs',
     hot: false,
     featured: true,
-    price: 'Rp 375.000,-',
+    price: 375000,
     description:
       'Menjadi sepatu “lifestyle” yang memberikan kesan klasik dengan menggunakan kombinasi material yang breathable dengan semi suede yang bikin adem dan outsole barunya dengan teknologi phylon rubber yang ringan, kenyal dan empuk namun tetap anti slip saat digunakan membuat sneakers ini sangat nyaman dan enak dipakai seharian.',
     thumbnail: '/products/white-1.webp',

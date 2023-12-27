@@ -4,12 +4,13 @@ import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { allProducts } from '@/data/data'
 import ProductCarousel1 from '@/components/carousel/ProductCarousel1'
+import { idrFormatter } from '@/lib/utils'
 
 export default function Page({ params }: { params: { slug: string } }) {
   const { slug } = params
   const getProduct = allProducts.filter((product) => product.slug === slug)
   const { name, price, description, gallery, hot } = getProduct[0]
-
+  const formattedPrice = idrFormatter(price)
 
   return (
     <>
@@ -26,8 +27,8 @@ export default function Page({ params }: { params: { slug: string } }) {
           <ProductCarousel1 images={gallery} />
         </div>
         <div className='col-span-2'>
-          <h1 className='mb-2 md:mb-4 text-3xl font-medium'>{name}</h1>
-          <p className='mb-8 text-xl'>{price}</p>
+          <h1 className='mb-2 text-3xl font-medium md:mb-4'>{name}</h1>
+          <p className='mb-8 text-xl'>{formattedPrice}</p>
           <div className='mb-10'>
             <h2 className='mb-2'>Description</h2>
             <p>{description}</p>
