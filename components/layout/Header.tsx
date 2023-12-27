@@ -5,6 +5,7 @@ import UserAccountNav from '../auth/UserAccountNav';
 import MobileMenu from './MobileMenu';
 import CartButton from '../cart/CartButton';
 import DesktopMenu from './DesktopMenu';
+import LoginButton from './LoginButton';
 
 
 export default function Header() {
@@ -25,6 +26,7 @@ export default function Header() {
 
       <div className='flex items-center gap-4'>
         <CartButton />
+        {/* <LoginButton /> */}
         <UserAccountNav />
       </div>
     </header>
