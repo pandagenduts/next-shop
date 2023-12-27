@@ -1,8 +1,12 @@
+'use client'
+
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { allProducts } from '@/data/data'
+import ProductCarousel1 from '@/components/carousel/ProductCarousel1'
 
-export default async function Page({ params }: { params: { slug: string } }) {
+export default function Page({ params }: { params: { slug: string } }) {
+
   const { slug } = params
   const getProduct = allProducts.filter((product) => product.slug === slug)
   const { name, price, description, gallery, hot } = getProduct[0]
@@ -17,11 +21,11 @@ export default async function Page({ params }: { params: { slug: string } }) {
         <p className='text-gray-500'>{name}</p>
       </div>
 
-      <div className='flex flex-col gap-5 md:flex-row'>
-        <div className='flex-1 lg:basis-3/5'>
-          
+      <div className='md:grid md:grid-cols-5 '>
+        <div className='col-span-3 pr-20'>
+          <ProductCarousel1 />
         </div>
-        <div className='flex-1 lg:basis-2/5'>
+        <div className='col-span-2'>
           <h1 className='mb-4 text-3xl font-medium'>{name}</h1>
           <p className='mb-8 text-xl'>{price}</p>
           <div className='mb-10'>
