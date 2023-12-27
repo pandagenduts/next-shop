@@ -32,13 +32,20 @@ export default function Page({ params }: { params: { slug: string } }) {
           <ProductCarousel1 images={gallery} />
         </div>
         <div className='col-span-2'>
-          <h1 className='mb-2 text-3xl text-center md:text-left font-medium md:mb-4'>{name}</h1>
-          <p className='mb-8 text-xl text-center md:text-left'>{formattedPrice}</p>
+          <h1 className='mb-2 text-center text-xl md:text-3xl font-bold md:mb-4 md:text-left'>
+            {name}
+          </h1>
+          <p className='mb-8 text-center text-base md:text-xl md:text-left'>
+            {formattedPrice}
+          </p>
           <div className='mb-10'>
             <h2 className='mb-2'>Description</h2>
             <p>{description}</p>
           </div>
-          <Button onClick={handleAddToCart} className='h-12 w-full rounded-full text-base'>
+          <Button
+            onClick={handleAddToCart}
+            className='h-12 w-full rounded-full text-base'
+          >
             Add to cart
           </Button>
         </div>
