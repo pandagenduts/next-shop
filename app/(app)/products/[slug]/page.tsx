@@ -6,10 +6,10 @@ import { allProducts } from '@/data/data'
 import ProductCarousel1 from '@/components/carousel/ProductCarousel1'
 
 export default function Page({ params }: { params: { slug: string } }) {
-
   const { slug } = params
   const getProduct = allProducts.filter((product) => product.slug === slug)
   const { name, price, description, gallery, hot } = getProduct[0]
+
 
   return (
     <>
@@ -22,17 +22,19 @@ export default function Page({ params }: { params: { slug: string } }) {
       </div>
 
       <div className='md:grid md:grid-cols-5 '>
-        <div className='col-span-3 pr-20'>
-          <ProductCarousel1 />
+        <div className='col-span-3 mb-8 md:mb-0 md:pr-10 lg:pr-20'>
+          <ProductCarousel1 images={gallery} />
         </div>
         <div className='col-span-2'>
-          <h1 className='mb-4 text-3xl font-medium'>{name}</h1>
+          <h1 className='mb-2 md:mb-4 text-3xl font-medium'>{name}</h1>
           <p className='mb-8 text-xl'>{price}</p>
           <div className='mb-10'>
             <h2 className='mb-2'>Description</h2>
             <p>{description}</p>
           </div>
-          <Button className='h-12 w-full text-base'>Add to cart</Button>
+          <Button className='h-12 w-full rounded-full text-base'>
+            Add to cart
+          </Button>
         </div>
       </div>
     </>
