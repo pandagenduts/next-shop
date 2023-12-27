@@ -2,6 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { allProducts } from '@/data/data'
 import { Badge } from '@/components/ui/badge'
+import { idrFormatter } from '@/lib/utils'
 
 export default function Page() {
   return (
@@ -14,7 +15,10 @@ export default function Page() {
       <h1 className='mb-8'>Products</h1>
 
       <div className='grid grid-cols-2 gap-6 md:grid-cols-4'>
-        {allProducts?.map((product) => (
+        {allProducts?.map((product) => {
+          const formattedPrice = idrFormatter(product.price)
+
+          return (
           <div key={product.id}>
             <Link href={`/products/${product.slug}`}>
               <div className='relative'>
@@ -34,10 +38,10 @@ export default function Page() {
               <p className='mb-1 text-center text-sm lg:text-lg'>
                 {product.name}
               </p>
-              <p className='text-center text-xs lg:text-sm'>{product.price}</p>
+              <p className='text-center text-xs lg:text-sm'>{formattedPrice}</p>
             </Link>
           </div>
-        ))}
+        )})}
       </div>
     </>
   )
