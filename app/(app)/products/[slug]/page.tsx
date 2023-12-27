@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { allProducts } from '@/data/data'
 import ProductCarousel1 from '@/components/carousel/ProductCarousel1'
 import { idrFormatter } from '@/lib/utils'
+import { toast } from 'sonner'
 
 export default function Page({ params }: { params: { slug: string } }) {
   const { slug } = params
@@ -13,7 +14,7 @@ export default function Page({ params }: { params: { slug: string } }) {
   const formattedPrice = idrFormatter(price)
 
   const handleAddToCart = () => {
-    
+    toast.success('Product added to cart!')
   }
 
   return (

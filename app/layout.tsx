@@ -5,6 +5,7 @@ import { cn } from '@/lib/utils'
 import { ThemeProvider } from '@/components/theme-provider'
 import Header from '@/components/layout/Header'
 import { Separator } from '@/components/ui/separator'
+import { Toaster } from 'sonner'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
 
@@ -21,10 +22,7 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body
-        className={cn(
-          'bg-background font-sans antialiased',
-          inter.variable,
-        )}
+        className={cn('bg-background font-sans antialiased', inter.variable)}
       >
         <ThemeProvider
           attribute='class'
@@ -32,10 +30,11 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <div id='web-wrapper' className='min-h-screen container'>
+          <div id='web-wrapper' className='container min-h-screen'>
             <Header />
             <Separator className='hidden md:block' />
-            <main className='pt-5 pb-5 md:pt-10 min-h-full'>{children}</main>
+            <main className='min-h-full pb-5 pt-5 md:pt-10'>{children}</main>
+            <Toaster position='top-right' />
           </div>
         </ThemeProvider>
       </body>
