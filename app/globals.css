@@ -76,19 +76,19 @@
 }
 
 h1 {
-  @apply text-lg font-semibold;
+  @apply text-2xl md:text-3xl leading-normal font-bold;
 }
 
 h2 {
-  @apply text-base font-semibold;
+  @apply text-xl md:text-2xl leading-normal font-semibold;
 }
 
 h3 {
-  @apply text-base font-semibold;
+  @apply text-lg md:text-xl leading-normal font-semibold;
 }
 
 h4 {
-  @apply font-semibold;
+  @apply text-base md:text-lg font-semibold;
 }
 
 /* carousel 1 on Product Details */
@@ -120,6 +120,23 @@ h4 {
 
 #product-details .thumbs-container .swiper-slide-thumb-active {
   opacity: 1;
+}
+
+/* Homepage */
+/* Carousel Fade */
+.carousel-fade .swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.carousel-fade .swiper-slide {
+  background-position: center;
+  background-size: cover;
+}
+
+.carousel-fade .swiper-slide img {
+  display: block;
+  width: 100%;
 }
 
 @media (max-width: 767px) {

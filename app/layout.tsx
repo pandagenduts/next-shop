@@ -34,7 +34,7 @@ export default function RootLayout({
             <Header />
             <Separator className='hidden md:block' />
             <main className='min-h-full pb-5 pt-5 md:pt-10'>{children}</main>
-            <Toaster position='top-right' />
+            <Toaster position='bottom-right' closeButton />
           </div>
         </ThemeProvider>
       </body>
