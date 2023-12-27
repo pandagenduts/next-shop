@@ -18,7 +18,7 @@ export default function page({ params }: { params: { order_id: string } }) {
         </Link>
       </Button>
 
-      <h2 className='mb-4'>Product Details</h2>
+      <h4 className='mb-4'>Product Details</h4>
       <div className='mb-8'>
         <Card>
           <CardHeader className='p-4'>
@@ -38,7 +38,7 @@ export default function page({ params }: { params: { order_id: string } }) {
         </Card>
       </div>
 
-      <h2 className='mb-4'>Payment Details</h2>
+      <h4 className='mb-4'>Payment Details</h4>
       <div>
         <div className='flex justify-between mb-2'>
           <p>Total Price (10 Products)</p>

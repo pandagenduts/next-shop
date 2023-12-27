@@ -81,8 +81,8 @@ export default function Home() {
       </section>
 
       <section className='flex flex-col items-center'>
-        <h2 className='mb-8 w-full text-left'>Discover Our Products</h2>
-        <div className='mb-8 grid grid-cols-2 md:grid-cols-4 gap-6'>
+        <h2 className='mb-4 md:mb-8 w-full text-left'>Discover Our Products</h2>
+        <div className='mb-10 grid grid-cols-2 md:grid-cols-4 gap-6'>
           {allProducts?.map((product) => {
             const formattedPrice = idrFormatter(product.price)
 

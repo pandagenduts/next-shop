@@ -12,7 +12,7 @@ export default function Page() {
         <span>/</span>
         <p className='text-gray-500'>Products</p>
       </div>
-      <h2 className='mb-8'>Products</h2>
+      <h2 className='mb-4 md:mb-8'>Products</h2>
 
       <div className='grid grid-cols-2 gap-6 md:grid-cols-4'>
         {allProducts?.map((product) => {

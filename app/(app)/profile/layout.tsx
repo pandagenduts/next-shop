@@ -21,7 +21,7 @@ export default function layout({ children }: { children: React.ReactNode }) {
           orderDetailsPage ? 'hidden md:block' : '',
         )}
       >
-        <h1 className='mb-2 hidden md:block'>Menu</h1>
+        <h4 className='mb-2 hidden md:block'>Menu</h4>
         <div className='flex gap-1 overflow-auto md:flex-col md:overflow-visible'>
           {profileMenu.map((menu) => (
             <Button
