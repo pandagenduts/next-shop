@@ -35,7 +35,7 @@ export default function RootLayout({
           <div id='web-wrapper' className='min-h-screen container'>
             <Header />
             <Separator className='hidden md:block' />
-            <main className='pt-5 md:pt-10 min-h-full'>{children}</main>
+            <main className='pt-5 pb-5 md:pt-10 min-h-full'>{children}</main>
           </div>
         </ThemeProvider>
       </body>
