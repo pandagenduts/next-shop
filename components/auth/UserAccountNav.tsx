@@ -15,6 +15,7 @@ import {
   Package as PackageIcon,
   LogOut as LogOutIcon,
 } from 'lucide-react'
+import { useState } from 'react'
 
 const menu = [
   {
@@ -30,8 +31,12 @@ const menu = [
 ]
 
 export default function UserAccountNav() {
+  const [isOpen, setIsOpen] = useState(false)
+
+  const handleClose = () => setIsOpen(false)
+
   return (
-    <DropdownMenu>
+    <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
       <DropdownMenuTrigger className='outline-none' asChild>
         <Avatar className='cursor-pointer'>
           <AvatarImage src='https://github.com/shadcn.png' />
@@ -42,7 +47,7 @@ export default function UserAccountNav() {
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
         {menu.map((menu) => (
-          <DropdownMenuItem key={menu.title}>
+          <DropdownMenuItem key={menu.title} onClick={handleClose}>
             <Link href={menu.href} className='flex'>
               <menu.icon className='mr-2 h-4 w-4' />
               {menu.title}
@@ -50,7 +55,7 @@ export default function UserAccountNav() {
           </DropdownMenuItem>
         ))}
         <DropdownMenuSeparator />
-        <DropdownMenuItem className='cursor-pointer'>
+        <DropdownMenuItem className='cursor-pointer' onClick={handleClose}>
           <LogOutIcon className='mr-2 h-4 w-4' />
           Sign Out
         </DropdownMenuItem>
