@@ -56,7 +56,7 @@ export default function ProductCarousel1(props: PropsType) {
         freeMode={true}
         watchSlidesProgress={true}
         modules={[FreeMode, Navigation, Thumbs]}
-        className='mySwiper'
+        className='thumbs-container'
       >
         {images.map((image) => (
           <SwiperSlide key={image}>
