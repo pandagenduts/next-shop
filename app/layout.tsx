@@ -33,7 +33,7 @@ export default function RootLayout({
           <div id='web-wrapper' className='container min-h-screen'>
             <Header />
             <Separator className='hidden md:block' />
-            <main className='min-h-full pb-5 pt-5 md:pt-10'>{children}</main>
+            <main className='min-h-full pb-20 pt-5 md:pt-10'>{children}</main>
             <Toaster position='bottom-right' closeButton />
           </div>
         </ThemeProvider>
