@@ -6,16 +6,24 @@ import { allProducts } from '@/data/data'
 import ProductCarousel1 from '@/components/carousel/ProductCarousel1'
 import { idrFormatter } from '@/lib/utils'
 import { toast } from 'sonner'
+import useCartStore from '@/store/cart-store'
 
 export default function Page({ params }: { params: { slug: string } }) {
   const { slug } = params
   const getProduct = allProducts.filter((product) => product.slug === slug)
-  const { name, price, description, gallery, hot } = getProduct[0]
+  const productData = getProduct[0]
+  const { name, price, description, gallery, hot } = productData
   const formattedPrice = idrFormatter(price)
 
+  const { items, addItem: addItemToCart } = useCartStore()
+
   const handleAddToCart = () => {
+    addItemToCart(productData)
+    
     toast.success('Product added to cart!')
   }
+
+  console.log(items)
 
   return (
     <>
@@ -32,10 +40,10 @@ export default function Page({ params }: { params: { slug: string } }) {
           <ProductCarousel1 images={gallery} />
         </div>
         <div className='col-span-2'>
-          <h1 className='mb-2 text-center text-xl md:text-3xl font-bold md:mb-4 md:text-left'>
+          <h1 className='mb-2 text-center text-xl font-bold md:mb-4 md:text-left md:text-3xl'>
             {name}
           </h1>
-          <p className='mb-8 text-center text-base md:text-xl md:text-left'>
+          <p className='mb-8 text-center text-base md:text-left md:text-xl'>
             {formattedPrice}
           </p>
           <div className='mb-10'>
