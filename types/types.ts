@@ -9,3 +9,7 @@ export type ProductType = {
   thumbnail: string
   gallery: string[]
 }
+
+export type CartItemsType = ProductType & {
+  quantity: number
+}

@@ -4,22 +4,17 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ProductType } from '@/types/types'
 import { idrFormatter } from '@/lib/utils'
+import useCartStore from '@/store/cart-store'
 
 type PropsType = {
-  data: ProductType
+  data: ProductType & { quantity: number }
 }
 
 export default function CartItem(props: PropsType) {
-  const { id, name, price, thumbnail } = props.data
+  const { id, name, price, thumbnail, quantity } = props.data
   const formattedPrice = idrFormatter(price)
 
-  const handleAddItem = () => {
-    
-  }
-
-  const handleRemoveItem = () => {
-
-  }
+  const { addItem, removeItem } = useCartStore()
 
   return (
     <div className='flex gap-4'>
@@ -41,15 +36,15 @@ export default function CartItem(props: PropsType) {
         <div className='flex justify-between gap-4'>
           <div className='flex w-full max-w-[80px] items-center justify-between'>
             <Button
-              onClick={handleRemoveItem}
+              onClick={() => removeItem(id)}
               className='h-auto cursor-pointer p-[6px]'
               variant='outline'
             >
               <Minus className='cursor-pointer' size={8} strokeWidth={4} />
             </Button>
-            <span>1</span>
+            <span>{quantity}</span>
             <Button
-              onClick={handleAddItem}
+              onClick={() => addItem(props.data)}
               className='h-auto cursor-pointer p-[6px]'
               variant='outline'
             >

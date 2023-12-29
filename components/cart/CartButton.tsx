@@ -14,14 +14,14 @@ import CartItem from './CartItem'
 import useCartStore from '@/store/cart-store'
 
 export default function CartButton() {
-  const { items: cartItems } = useCartStore()
+  const { items: cartItems, totalQuantityOnCart } = useCartStore()
 
   return (
     <Sheet>
       <SheetTrigger asChild>
         <Button variant='outline' className='rounded-full'>
           <ShoppingCartIcon className='mr-2 h-4 w-4' />
-          <span>0</span>
+          <span>{totalQuantityOnCart}</span>
         </Button>
       </SheetTrigger>
       <SheetContent className='flex w-full flex-col min-[500px]:max-w-sm sm:max-w-md'>

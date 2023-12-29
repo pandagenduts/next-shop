@@ -5,25 +5,17 @@ import Link from 'next/link'
 import { allProducts } from '@/data/data'
 import ProductCarousel1 from '@/components/carousel/ProductCarousel1'
 import { idrFormatter } from '@/lib/utils'
-import { toast } from 'sonner'
 import useCartStore from '@/store/cart-store'
+import { toast } from 'sonner'
 
 export default function Page({ params }: { params: { slug: string } }) {
   const { slug } = params
   const getProduct = allProducts.filter((product) => product.slug === slug)
   const productData = getProduct[0]
-  const { name, price, description, gallery, hot } = productData
+  const { name, price, description, gallery } = productData
   const formattedPrice = idrFormatter(price)
 
-  const { items, addItem: addItemToCart } = useCartStore()
-
-  const handleAddToCart = () => {
-    addItemToCart(productData)
-    
-    toast.success('Product added to cart!')
-  }
-
-  console.log(items)
+  const { addItem: addItemToCart } = useCartStore()
 
   return (
     <>
@@ -51,7 +43,10 @@ export default function Page({ params }: { params: { slug: string } }) {
             <p>{description}</p>
           </div>
           <Button
-            onClick={handleAddToCart}
+            onClick={() => {
+              addItemToCart(productData)
+              toast.success('Product added to cart!')
+            }}
             className='h-12 w-full rounded-full text-base'
           >
             Add to cart
