@@ -2,17 +2,19 @@
 
 import Image from 'next/image'
 
-import { Swiper, SwiperSlide } from 'swiper/react'
-import 'swiper/css'
-import 'swiper/css/effect-fade'
-import 'swiper/css/pagination'
-import { Autoplay, EffectFade, Navigation, Pagination } from 'swiper/modules'
-
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { idrFormatter } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
 import { allProducts } from '@/data/data'
+import CarouselFade from '@/components/carousel/CarouselFade'
+
+const heroImageUrls = [
+  '/products/classic-1.webp',
+  '/products/corsa-2.webp',
+  '/products/white-3.webp',
+  '/products/corte-1.webp',
+]
 
 export default function Home() {
   return (
@@ -30,53 +32,8 @@ export default function Home() {
             <Link href='/products'>Shop Now</Link>
           </Button>
         </div>
-        <div className=''>
-          <Swiper
-            spaceBetween={30}
-            effect={'fade'}
-            pagination={{
-              clickable: true,
-            }}
-            modules={[Autoplay, EffectFade, Pagination]}
-            className='mySwiper'
-            speed={1000}
-            autoplay={{
-              delay: 6000,
-            }}
-          >
-            <SwiperSlide>
-              <Image
-                src='/products/classic-1.webp'
-                alt='product-image'
-                width={750}
-                height={750}
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <Image
-                src='/products/corsa-2.webp'
-                alt='product-image'
-                width={750}
-                height={750}
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <Image
-                src='/products/white-3.webp'
-                alt='product-image'
-                width={750}
-                height={750}
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <Image
-                src='/products/corte-1.webp'
-                alt='product-image'
-                width={750}
-                height={750}
-              />
-            </SwiperSlide>
-          </Swiper>
+        <div>
+          <CarouselFade images={heroImageUrls} />
         </div>
       </section>
 
