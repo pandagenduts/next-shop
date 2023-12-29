@@ -39,7 +39,7 @@ export default function Page({ params }: { params: { slug: string } }) {
             {formattedPrice}
           </p>
           <div className='mb-10'>
-            <h2 className='mb-2'>Description</h2>
+            <h4 className='mb-2'>Description</h4>
             <p>{description}</p>
           </div>
           <Button
