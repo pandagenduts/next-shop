@@ -1,6 +1,6 @@
 'use client'
 
-import { ShoppingCart as ShoppingCartIcon } from 'lucide-react'
+import { ShoppingCart } from 'lucide-react'
 import {
   Sheet,
   SheetContent,
@@ -12,16 +12,22 @@ import {
 import { Button } from '../ui/button'
 import CartItem from './CartItem'
 import useCartStore from '@/store/cart-store'
+import { useEffect, useState } from 'react'
 
 export default function CartButton() {
+  const [cartTotalQuantity, setCartTotalQuantity] = useState(0)
   const { items: cartItems, totalQuantityOnCart } = useCartStore()
+
+  useEffect(() => {
+    setCartTotalQuantity(totalQuantityOnCart)
+  }, [totalQuantityOnCart])
 
   return (
     <Sheet>
       <SheetTrigger asChild>
         <Button variant='outline' className='rounded-full'>
-          <ShoppingCartIcon className='mr-2 h-4 w-4' />
-          <span>{totalQuantityOnCart}</span>
+          <ShoppingCart className='mr-2 h-4 w-4' />
+          <span>{cartTotalQuantity}</span>
         </Button>
       </SheetTrigger>
       <SheetContent className='flex w-full flex-col min-[500px]:max-w-sm sm:max-w-md'>

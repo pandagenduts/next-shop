@@ -9,7 +9,6 @@ type CartState = {
   totalQuantityOnCart: number
   addItem: (item: ProductType) => void
   removeItem: (id: number) => void
-  clearItems: () => void
 }
 
 const useCartStore = create(
@@ -59,7 +58,6 @@ const useCartStore = create(
           toast.success('Item removed from cart.')
         }
       },
-      clearItems: () => set({ items: [] }),
     }),
     {
       name: 'cart-store',
