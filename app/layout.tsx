@@ -6,6 +6,7 @@ import { ThemeProvider } from '@/components/theme-provider'
 import Header from '@/components/layout/Header'
 import { Separator } from '@/components/ui/separator'
 import { Toaster } from 'sonner'
+import Footer from '@/components/layout/Footer'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
 
@@ -36,6 +37,7 @@ export default function RootLayout({
             <main className='min-h-full pb-20 pt-5 md:pt-10'>{children}</main>
             <Toaster position='top-center' closeButton />
           </div>
+          <Footer />
         </ThemeProvider>
       </body>
     </html>
