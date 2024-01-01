@@ -18,6 +18,7 @@ import { idrFormatter } from '@/lib/utils'
 export default function CartButton() {
   const [cartTotalQuantity, setCartTotalQuantity] = useState(0)
   const [totalPrice, setTotalPrice] = useState('')
+  const [isOpen, setIsOpen] = useState(false)
   const { items: cartItems, totalQuantityOnCart, grandTotalPrice } = useCartStore()
 
   useEffect(() => {
@@ -27,8 +28,10 @@ export default function CartButton() {
     setTotalPrice(formattedTotalPrice)
   }, [totalQuantityOnCart])
 
+  const handleClose = () => setIsOpen(false)
+
   return (
-    <Sheet>
+    <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetTrigger asChild>
         <Button variant='outline' className='rounded-full'>
           <ShoppingCart className='mr-2 h-4 w-4' />
@@ -46,7 +49,7 @@ export default function CartButton() {
           <div className='flex flex-1 flex-col gap-8 overflow-y-hidden'>
             <div className='flex flex-1 flex-col gap-4 overflow-hidden overflow-y-auto'>
               {cartItems.map((item) => (
-                <CartItem key={item.id} data={item} />
+                <CartItem key={item.id} data={item} handleSheetClose={handleClose} />
               ))}
             </div>
 

@@ -8,10 +8,11 @@ import useCartStore from '@/store/cart-store'
 
 type PropsType = {
   data: ProductType & { quantity: number }
+  handleSheetClose: () => void
 }
 
 export default function CartItem(props: PropsType) {
-  const { id, name, price, thumbnail, quantity } = props.data
+  const { id, name, price, thumbnail, quantity, slug } = props.data
   const formattedPrice = idrFormatter(price)
 
   const { addItem, removeItem } = useCartStore()
@@ -19,7 +20,7 @@ export default function CartItem(props: PropsType) {
   return (
     <div className='flex gap-4'>
       <div className='max-w-[90px]'>
-        <Link href='/'>
+        <Link href={`/products/${slug}`} onClick={props.handleSheetClose}>
           <Image
             src={thumbnail}
             width={90}
@@ -30,7 +31,7 @@ export default function CartItem(props: PropsType) {
         </Link>
       </div>
       <div className='flex flex-1 flex-col justify-between'>
-        <Link href='/' className='font-bold'>
+        <Link href={`/products/${slug}`} className='font-bold' onClick={props.handleSheetClose}>
           Corte Mid Full Black
         </Link>
         <div className='flex justify-between gap-4'>
