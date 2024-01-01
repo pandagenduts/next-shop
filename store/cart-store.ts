@@ -7,6 +7,7 @@ import { toast } from 'sonner'
 type CartState = {
   items: CartItemsType[]
   totalQuantityOnCart: number
+  grandTotalPrice: number
   addItem: (item: ProductType) => void
   removeItem: (id: number) => void
 }
@@ -16,6 +17,7 @@ const useCartStore = create(
     (set, get) => ({
       items: [],
       totalQuantityOnCart: 0,
+      grandTotalPrice: 0,
       addItem: (item) => {
         const currentItems = get().items
         const isProductExist = currentItems.find(
@@ -29,11 +31,19 @@ const useCartStore = create(
             }
             return currentItem
           })
-          set({ items: updatedItems, totalQuantityOnCart: countTotalQuantity(updatedItems) })
+          set({
+            items: updatedItems,
+            totalQuantityOnCart: countTotalQuantity(updatedItems),
+            grandTotalPrice: countGrandTotalPrice(updatedItems),
+          })
         } else {
           const newItem = { ...item, quantity: 1 }
           const updatedItems = [...currentItems, newItem]
-          set({ items: updatedItems, totalQuantityOnCart: countTotalQuantity(updatedItems) })
+          set({
+            items: updatedItems,
+            totalQuantityOnCart: countTotalQuantity(updatedItems),
+            grandTotalPrice: countGrandTotalPrice(updatedItems),
+          })
         }
       },
       removeItem: (id) => {
@@ -49,12 +59,20 @@ const useCartStore = create(
             }
             return currentItem
           })
-          set({ items: updatedItems, totalQuantityOnCart: countTotalQuantity(updatedItems) })
+          set({
+            items: updatedItems,
+            totalQuantityOnCart: countTotalQuantity(updatedItems),
+            grandTotalPrice: countGrandTotalPrice(updatedItems),
+          })
         } else {
           const filteredItems = currentItems.filter(
             (currentItem) => currentItem.id !== id,
           )
-          set({ items: filteredItems, totalQuantityOnCart: countTotalQuantity(filteredItems) })
+          set({
+            items: filteredItems,
+            totalQuantityOnCart: countTotalQuantity(filteredItems),
+            grandTotalPrice: countGrandTotalPrice(filteredItems),
+          })
           toast.success('Item removed from cart.')
         }
       },
@@ -66,10 +84,19 @@ const useCartStore = create(
   ),
 )
 
-function countTotalQuantity (items: CartItemsType[]) {
+function countTotalQuantity(items: CartItemsType[]) {
   let total = 0
   items.forEach((item) => {
     total += item.quantity
+  })
+
+  return total
+}
+
+function countGrandTotalPrice(items: CartItemsType[]) {
+  let total = 0
+  items.forEach((item) => {
+    total += item.quantity * item.price
   })
 
   return total

@@ -13,13 +13,18 @@ import { Button } from '../ui/button'
 import CartItem from './CartItem'
 import useCartStore from '@/store/cart-store'
 import { useEffect, useState } from 'react'
+import { idrFormatter } from '@/lib/utils'
 
 export default function CartButton() {
   const [cartTotalQuantity, setCartTotalQuantity] = useState(0)
-  const { items: cartItems, totalQuantityOnCart } = useCartStore()
+  const [totalPrice, setTotalPrice] = useState('')
+  const { items: cartItems, totalQuantityOnCart, grandTotalPrice } = useCartStore()
 
   useEffect(() => {
+    const formattedTotalPrice = idrFormatter(grandTotalPrice)
+
     setCartTotalQuantity(totalQuantityOnCart)
+    setTotalPrice(formattedTotalPrice)
   }, [totalQuantityOnCart])
 
   return (
@@ -48,7 +53,7 @@ export default function CartButton() {
             <div>
               <div className='mb-5 flex justify-between '>
                 <span>Subtotal</span>
-                <p className='text-right'>Rp 0,-</p>
+                <p className='text-right'>{totalPrice}</p>
               </div>
               <p className='mb-5 text-center text-xs text-gray-500'>
                 Shipping, taxes, and discount codes calculated at checkout.
