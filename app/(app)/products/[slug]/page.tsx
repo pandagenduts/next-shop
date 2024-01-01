@@ -12,10 +12,11 @@ export default function Page({ params }: { params: { slug: string } }) {
   const { slug } = params
   const getProduct = allProducts.filter((product) => product.slug === slug)
   const productData = getProduct[0]
-  const { name, price, description, gallery } = productData
+  const { name, price, description, gallery, id } = productData
   const formattedPrice = idrFormatter(price)
 
-  const { addItem: addItemToCart } = useCartStore()
+  const { addItemToCart, cartItems, removeItemFromCart } = useCartStore()
+  console.log(cartItems);
 
   return (
     <>
@@ -44,7 +45,7 @@ export default function Page({ params }: { params: { slug: string } }) {
           </div>
           <Button
             onClick={() => {
-              addItemToCart(productData)
+              addItemToCart(id)
               toast.success('Product added to cart!')
             }}
             className='h-12 w-full rounded-full text-base'

@@ -15,7 +15,7 @@ export default function CartItem(props: PropsType) {
   const { id, name, price, thumbnail, quantity, slug } = props.data
   const formattedPrice = idrFormatter(price)
 
-  const { addItem, removeItem } = useCartStore()
+  const { addItemToCart, removeItemFromCart } = useCartStore()
 
   return (
     <div className='flex gap-4'>
@@ -37,7 +37,7 @@ export default function CartItem(props: PropsType) {
         <div className='flex justify-between gap-4'>
           <div className='flex w-full max-w-[80px] items-center justify-between'>
             <Button
-              onClick={() => removeItem(id)}
+              onClick={() => removeItemFromCart(id)}
               className='h-auto cursor-pointer p-[6px]'
               variant='outline'
             >
@@ -45,7 +45,7 @@ export default function CartItem(props: PropsType) {
             </Button>
             <span>{quantity}</span>
             <Button
-              onClick={() => addItem(props.data)}
+              onClick={() => addItemToCart(id)}
               className='h-auto cursor-pointer p-[6px]'
               variant='outline'
             >
