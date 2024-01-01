@@ -63,7 +63,6 @@ export default function CartButtonServer() {
         const cartData = data.message
         setIsFetching(false)
         setCartItems(cartData)
-        console.log(cartData)
       })
       .catch((err) => {
         setIsFetching(false)
@@ -93,7 +92,7 @@ export default function CartButtonServer() {
                 // <CartItem key={item.id} data={item} handleSheetClose={handleClose} />
                 <div className='flex gap-4' key={item.id}>
                   <div className='max-w-[90px]'>
-                    <Link href='/' onClick={handleClose}>
+                    <Link href={`/products/${item.slug}`} onClick={handleClose}>
                       <Image
                         src={item.thumbnail}
                         width={90}
@@ -104,8 +103,8 @@ export default function CartButtonServer() {
                     </Link>
                   </div>
                   <div className='flex flex-1 flex-col justify-between'>
-                    <Link href='/' className='font-bold' onClick={handleClose}>
-                      Corte Mid Full Black
+                    <Link href={`/products/${item.slug}`} className='font-bold' onClick={handleClose}>
+                      {item.name}
                     </Link>
                     <div className='flex justify-between gap-4'>
                       <div className='flex w-full max-w-[80px] items-center justify-between'>
