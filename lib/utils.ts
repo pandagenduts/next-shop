@@ -1,5 +1,6 @@
-import { type ClassValue, clsx } from "clsx"
-import { twMerge } from "tailwind-merge"
+import { type ClassValue, clsx } from 'clsx'
+import { twMerge } from 'tailwind-merge'
+import { CartItemsStore } from '@/store/cart-store'
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -15,3 +16,31 @@ export function idrFormatter(num: number) {
     currency: 'IDR',
   }).format(num)
 }
+
+export function extractProductsId(cartItems: CartItemsStore[]) {
+  const productId: number[] = []
+
+  cartItems.forEach((item) => {
+    productId.push(item.id)
+  })
+
+  return productId
+}
+
+export function countTotalQuantity(items: CartItemsStore[]) {
+  let total = 0
+  items.forEach((item) => {
+    total += item.quantity
+  })
+
+  return total
+}
+
+// export function countTotalPrice(items: CartItemsType[]) {
+//   let total = 0
+//   items.forEach((item) => {
+//     total += item.quantity * item.price
+//   })
+
+//   return total
+// }

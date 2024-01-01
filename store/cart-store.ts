@@ -4,13 +4,13 @@ import { create } from 'zustand'
 import { persist, createJSONStorage } from 'zustand/middleware'
 import { toast } from 'sonner'
 
-type CartItemsType = {
+export type CartItemsStore = {
   id: number
   quantity: number
 }
 
 type CartState = {
-  cartItems: CartItemsType[]
+  cartItemsStore: CartItemsStore[]
   addItemToCart: (id: number) => void
   removeItemFromCart: (id: number) => void
 }
@@ -18,9 +18,9 @@ type CartState = {
 const useCartStore = create(
   persist<CartState>(
     (set, get) => ({
-      cartItems: [],
+      cartItemsStore: [],
       addItemToCart: (id) => {
-        const currentItems = get().cartItems
+        const currentItems = get().cartItemsStore
         const itemExist = currentItems.find(
           (currentItem) => currentItem.id === id,
         )
@@ -33,16 +33,16 @@ const useCartStore = create(
             return currentItem
           })
 
-          set({ cartItems: updatedItems })
+          set({ cartItemsStore: updatedItems })
         } else {
-          set({ cartItems: [...currentItems, { id: id, quantity: 1 }] })
+          set({ cartItemsStore: [...currentItems, { id: id, quantity: 1 }] })
         }
       },
       removeItemFromCart: (id) => {
-        const currentItems = get().cartItems
+        const currentItems = get().cartItemsStore
         const itemExist = currentItems.find(
           (currentItem) => currentItem.id === id,
-        )
+        )!
 
         if (itemExist.quantity > 1) {
           const updatedItems = currentItems.map((currentItem) => {
@@ -52,13 +52,13 @@ const useCartStore = create(
             return currentItem
           })
 
-          set({ cartItems: updatedItems })
+          set({ cartItemsStore: updatedItems })
         } else {
           const updatedItems = currentItems.filter(
             (currentItem) => currentItem.id !== id,
           )
 
-          set({ cartItems: updatedItems })
+          set({ cartItemsStore: updatedItems })
         }
       },
     }),

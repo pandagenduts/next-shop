@@ -13,27 +13,64 @@ import { Button } from '../ui/button'
 import CartItem from './CartItem'
 import useCartStore from '@/store/cart-store'
 import { useEffect, useState } from 'react'
-import { idrFormatter } from '@/lib/utils'
+import { countTotalQuantity, extractProductsId, idrFormatter } from '@/lib/utils'
 
 import { Minus, Plus } from 'lucide-react'
 
 import Link from 'next/link'
 import Image from 'next/image'
+import { getProducts } from '@/lib/actions/getProducts'
+import { ProductType } from '@/lib/types'
+
+type ExtendedCartItems = ProductType & {
+  quantity: number
+}
+
+type CartItems = {
+  items: ExtendedCartItems[] | []
+  totalQuantity: number
+  totalPrice: number
+}
 
 export default function CartButton() {
-  const [cartTotalQuantity, setCartTotalQuantity] = useState(0)
-  const [totalPrice, setTotalPrice] = useState('')
+  const { cartItemsStore, addItemToCart, removeItemFromCart } = useCartStore()
   const [isOpen, setIsOpen] = useState(false)
-  const { cartItems, addItemToCart, removeItemFromCart } = useCartStore()
-
-  // useEffect(() => {
-  //   const formattedTotalPrice = idrFormatter(grandTotalPrice)
-
-  //   setCartTotalQuantity(totalQuantityOnCart)
-  //   setTotalPrice(formattedTotalPrice)
-  // }, [totalQuantityOnCart])
+  const [cartItems, setCartItems] = useState<CartItems>({
+    items: [],
+    totalQuantity: 0,
+    totalPrice: 0,
+  })
 
   const handleClose = () => setIsOpen(false)
+
+  console.log('cart items:', cartItems)
+
+  useEffect(() => {
+    if (cartItemsStore.length !== 0) {
+      const productId = extractProductsId(cartItemsStore)
+      const products: any = getProducts(productId)
+
+      if (products.length > 0) {
+        const totalQuantity = countTotalQuantity(cartItemsStore)
+        let totalPrice = 0
+        for (let i = 0; i < cartItemsStore.length; ++i) {
+          totalPrice += products[i].price * cartItemsStore[i].quantity
+        }
+
+        setCartItems({
+          items: products,
+          totalQuantity: totalQuantity,
+          totalPrice: totalPrice,
+        })
+      }
+    } else if (cartItemsStore.length === 0) {
+      setCartItems({
+        items: [],
+        totalQuantity: 0,
+        totalPrice: 0,
+      })
+    }
+  }, [cartItemsStore])
 
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
@@ -46,12 +83,14 @@ export default function CartButton() {
       <SheetContent className='flex w-full flex-col min-[500px]:max-w-sm sm:max-w-md'>
         <SheetHeader className='mb-4'>
           <SheetTitle>Cart</SheetTitle>
-          <SheetDescription>Cart is empty</SheetDescription>
+          {cartItems.items.length === 0 && (
+            <SheetDescription>Cart is empty</SheetDescription>
+          )}
         </SheetHeader>
-        {/* {cartItems.length > 0 && (
+        {cartItems.items.length > 0 && (
           <div className='flex flex-1 flex-col gap-8 overflow-y-hidden'>
             <div className='flex flex-1 flex-col gap-4 overflow-hidden overflow-y-auto'>
-              {cartItems.map((item) => (
+              {cartItems.items.map((item) => (
                 // <CartItem key={item.id} data={item} handleSheetClose={handleClose} />
                 <div className='flex gap-4' key={item.id}>
                   <div className='max-w-[90px]'>
@@ -113,7 +152,7 @@ export default function CartButton() {
               <Button className='w-full'>Checkout</Button>
             </div>
           </div>
-        )} */}
+        )}
       </SheetContent>
     </Sheet>
   )

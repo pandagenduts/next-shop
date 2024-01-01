@@ -2,7 +2,7 @@ import { Minus, Plus } from 'lucide-react'
 import { Button } from '../ui/button'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ProductType } from '@/types/types'
+import { ProductType } from '@/lib/types'
 import { idrFormatter } from '@/lib/utils'
 import useCartStore from '@/store/cart-store'
 
