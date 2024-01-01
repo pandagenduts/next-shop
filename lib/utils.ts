@@ -1,6 +1,7 @@
 import { type ClassValue, clsx } from 'clsx'
 import { twMerge } from 'tailwind-merge'
 import { CartItemsStore } from '@/store/cart-store'
+import { ProductType } from './types'
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -17,30 +18,30 @@ export function idrFormatter(num: number) {
   }).format(num)
 }
 
-export function extractProductsId(cartItems: CartItemsStore[]) {
+export function extractProductsId(cartItemsStore: CartItemsStore[]) {
   const productId: number[] = []
 
-  cartItems.forEach((item) => {
+  cartItemsStore.forEach((item) => {
     productId.push(item.id)
   })
 
   return productId
 }
 
-export function countTotalQuantity(items: CartItemsStore[]) {
-  let total = 0
-  items.forEach((item) => {
-    total += item.quantity
+export function countTotalQuantity(cartItemsStore: CartItemsStore[]) {
+  let totalQuantity = 0
+  cartItemsStore.forEach((item) => {
+    totalQuantity += item.quantity
   })
 
-  return total
+  return totalQuantity
 }
 
-// export function countTotalPrice(items: CartItemsType[]) {
-//   let total = 0
-//   items.forEach((item) => {
-//     total += item.quantity * item.price
-//   })
+export function countTotalPrice(cartItemsStore: CartItemsStore[], products: ProductType[]) {
+  let totalPrice = 0
+  for (let i = 0; i < cartItemsStore.length; i++) {
+    totalPrice += products[i].price * cartItemsStore[i].quantity
+  }
 
-//   return total
-// }
+  return totalPrice
+}

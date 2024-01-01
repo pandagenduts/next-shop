@@ -1,5 +1,3 @@
-// @ts-nocheck
-
 import { create } from 'zustand'
 import { persist, createJSONStorage } from 'zustand/middleware'
 import { toast } from 'sonner'
@@ -59,6 +57,7 @@ const useCartStore = create(
           )
 
           set({ cartItemsStore: updatedItems })
+          toast.success('Item removed from the cart!')
         }
       },
     }),

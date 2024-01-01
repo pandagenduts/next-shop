@@ -13,7 +13,12 @@ import { Button } from '../ui/button'
 import CartItem from './CartItem'
 import useCartStore from '@/store/cart-store'
 import { useEffect, useState } from 'react'
-import { countTotalQuantity, extractProductsId, idrFormatter } from '@/lib/utils'
+import {
+  countTotalPrice,
+  countTotalQuantity,
+  extractProductsId,
+  idrFormatter,
+} from '@/lib/utils'
 
 import { Minus, Plus } from 'lucide-react'
 
@@ -43,7 +48,8 @@ export default function CartButton() {
 
   const handleClose = () => setIsOpen(false)
 
-  console.log('cart items:', cartItems)
+  // console.log('cart items:', cartItems)
+  // console.log('zustand:', cartItemsStore)
 
   useEffect(() => {
     if (cartItemsStore.length !== 0) {
@@ -51,14 +57,16 @@ export default function CartButton() {
       const products: any = getProducts(productId)
 
       if (products.length > 0) {
+        const extendedProducts = products.map((item: any, index: number) => {
+          item.quantity = cartItemsStore[index].quantity
+
+          return item
+        })
         const totalQuantity = countTotalQuantity(cartItemsStore)
-        let totalPrice = 0
-        for (let i = 0; i < cartItemsStore.length; ++i) {
-          totalPrice += products[i].price * cartItemsStore[i].quantity
-        }
+        const totalPrice = countTotalPrice(cartItemsStore, products)
 
         setCartItems({
-          items: products,
+          items: extendedProducts,
           totalQuantity: totalQuantity,
           totalPrice: totalPrice,
         })
@@ -77,7 +85,7 @@ export default function CartButton() {
       <SheetTrigger asChild>
         <Button variant='outline' className='rounded-full'>
           <ShoppingCart className='mr-2 h-4 w-4' />
-          <span>0</span>
+          <span>{cartItems.totalQuantity}</span>
         </Button>
       </SheetTrigger>
       <SheetContent className='flex w-full flex-col min-[500px]:max-w-sm sm:max-w-md'>
@@ -94,9 +102,9 @@ export default function CartButton() {
                 // <CartItem key={item.id} data={item} handleSheetClose={handleClose} />
                 <div className='flex gap-4' key={item.id}>
                   <div className='max-w-[90px]'>
-                    <Link href='/' onClick={handleClose}>
+                    <Link href={`/products/${item.slug}`} onClick={handleClose}>
                       <Image
-                        src='/products/classic-1.webp'
+                        src={item.thumbnail}
                         width={90}
                         height={90}
                         alt='product'
@@ -105,8 +113,8 @@ export default function CartButton() {
                     </Link>
                   </div>
                   <div className='flex flex-1 flex-col justify-between'>
-                    <Link href='/' className='font-bold' onClick={handleClose}>
-                      Corte Mid Full Black
+                    <Link href={`/products/${item.slug}`} className='font-bold' onClick={handleClose}>
+                      {item.name}
                     </Link>
                     <div className='flex justify-between gap-4'>
                       <div className='flex w-full max-w-[80px] items-center justify-between'>
@@ -134,7 +142,7 @@ export default function CartButton() {
                           />
                         </Button>
                       </div>
-                      <div>Rp 123.000,-</div>
+                      <div>{idrFormatter(item.price)}</div>
                     </div>
                   </div>
                 </div>
@@ -144,7 +152,7 @@ export default function CartButton() {
             <div>
               <div className='mb-5 flex justify-between '>
                 <span>Subtotal</span>
-                <p className='text-right'>Rp 123.000,-</p>
+                <p className='text-right'>{idrFormatter(cartItems.totalPrice)}</p>
               </div>
               <p className='mb-5 text-center text-xs text-gray-500'>
                 Shipping, taxes, and discount codes calculated at checkout.
