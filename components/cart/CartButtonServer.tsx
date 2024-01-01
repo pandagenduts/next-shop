@@ -40,6 +40,7 @@ type CartItems = {
 export default function CartButtonServer() {
   const { cartItemsStore, addItemToCart, removeItemFromCart } = useCartStore()
   const [isOpen, setIsOpen] = useState(false)
+  const [isFetching, setIsFetching] = useState(false)
   const [cartItems, setCartItems] = useState<CartItems>({
     items: [],
     totalQuantity: 0,
@@ -52,13 +53,21 @@ export default function CartButtonServer() {
   // console.log('zustand:', cartItemsStore)
 
   useEffect(() => {
+    setIsFetching(true)
     fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/cart`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(cartItemsStore),
-    }).then((res) => res.json()).then((data) => console.log(data))
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        const cartData = data.message
+        setIsFetching(false)
+        setCartItems(cartData)
+        console.log(cartData)
+      })
   }, [cartItemsStore])
 
   return (
@@ -103,6 +112,7 @@ export default function CartButtonServer() {
                           onClick={() => removeItemFromCart(item.id)}
                           className='h-auto cursor-pointer p-[6px]'
                           variant='outline'
+                          disabled={isFetching}
                         >
                           <Minus
                             className='cursor-pointer'
@@ -115,6 +125,7 @@ export default function CartButtonServer() {
                           onClick={() => addItemToCart(item.id)}
                           className='h-auto cursor-pointer p-[6px]'
                           variant='outline'
+                          disabled={isFetching}
                         >
                           <Plus
                             className='cursor-pointer'
