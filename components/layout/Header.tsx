@@ -6,6 +6,7 @@ import MobileMenu from './MobileMenu';
 import CartButton from '../cart/CartButton';
 import DesktopMenu from './DesktopMenu';
 import LoginButton from './LoginButton';
+import CartButtonServer from '../cart/CartButtonServer';
 
 
 export default function Header() {
@@ -25,7 +26,8 @@ export default function Header() {
       </div>
 
       <div className='flex items-center gap-4'>
-        <CartButton />
+        {/* <CartButton /> */}
+        <CartButtonServer />
         {/* <LoginButton /> */}
         <UserAccountNav />
       </div>

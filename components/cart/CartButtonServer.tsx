@@ -37,7 +37,7 @@ type CartItems = {
   totalPrice: number
 }
 
-export default function CartButton() {
+export default function CartButtonServer() {
   const { cartItemsStore, addItemToCart, removeItemFromCart } = useCartStore()
   const [isOpen, setIsOpen] = useState(false)
   const [cartItems, setCartItems] = useState<CartItems>({
@@ -49,35 +49,16 @@ export default function CartButton() {
   const handleClose = () => setIsOpen(false)
 
   // console.log('cart items:', cartItems)
-  console.log('zustand:', cartItemsStore)
+  // console.log('zustand:', cartItemsStore)
 
   useEffect(() => {
-    if (cartItemsStore.length !== 0) {
-      const productId = extractProductsId(cartItemsStore)
-      const products: any = getProducts(productId)
-
-      if (products.length > 0) {
-        const extendedProducts = products.map((item: any, index: number) => {
-          item.quantity = cartItemsStore[index].quantity
-
-          return item
-        })
-        const totalQuantity = countTotalQuantity(cartItemsStore)
-        const totalPrice = countTotalPrice(cartItemsStore, products)
-
-        setCartItems({
-          items: extendedProducts,
-          totalQuantity: totalQuantity,
-          totalPrice: totalPrice,
-        })
-      }
-    } else if (cartItemsStore.length === 0) {
-      setCartItems({
-        items: [],
-        totalQuantity: 0,
-        totalPrice: 0,
-      })
-    }
+    fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/cart`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(cartItemsStore),
+    }).then((res) => res.json()).then((data) => console.log(data))
   }, [cartItemsStore])
 
   return (
@@ -91,20 +72,20 @@ export default function CartButton() {
       <SheetContent className='flex w-full flex-col min-[500px]:max-w-sm sm:max-w-md'>
         <SheetHeader className='mb-4'>
           <SheetTitle>Cart</SheetTitle>
-          {cartItems.items.length === 0 && (
+          {cartItemsStore.length === 0 && (
             <SheetDescription>Cart is empty</SheetDescription>
           )}
         </SheetHeader>
-        {cartItems.items.length > 0 && (
+        {cartItemsStore.length !== 0 && (
           <div className='flex flex-1 flex-col gap-8 overflow-y-hidden'>
             <div className='flex flex-1 flex-col gap-4 overflow-hidden overflow-y-auto'>
-              {cartItems.items.map((item) => (
+              {cartItemsStore.map((item) => (
                 // <CartItem key={item.id} data={item} handleSheetClose={handleClose} />
                 <div className='flex gap-4' key={item.id}>
                   <div className='max-w-[90px]'>
-                    <Link href={`/products/${item.slug}`} onClick={handleClose}>
+                    <Link href='/' onClick={handleClose}>
                       <Image
-                        src={item.thumbnail}
+                        src='/products/corte-1.webp'
                         width={90}
                         height={90}
                         alt='product'
@@ -113,8 +94,8 @@ export default function CartButton() {
                     </Link>
                   </div>
                   <div className='flex flex-1 flex-col justify-between'>
-                    <Link href={`/products/${item.slug}`} className='font-bold' onClick={handleClose}>
-                      {item.name}
+                    <Link href='/' className='font-bold' onClick={handleClose}>
+                      Corte Mid Full Black
                     </Link>
                     <div className='flex justify-between gap-4'>
                       <div className='flex w-full max-w-[80px] items-center justify-between'>
@@ -129,7 +110,7 @@ export default function CartButton() {
                             strokeWidth={4}
                           />
                         </Button>
-                        <span>{item.quantity}</span>
+                        <span>1</span>
                         <Button
                           onClick={() => addItemToCart(item.id)}
                           className='h-auto cursor-pointer p-[6px]'
@@ -142,7 +123,7 @@ export default function CartButton() {
                           />
                         </Button>
                       </div>
-                      <div>{idrFormatter(item.price)}</div>
+                      <div>Rp 123.000,-</div>
                     </div>
                   </div>
                 </div>
@@ -152,7 +133,7 @@ export default function CartButton() {
             <div>
               <div className='mb-5 flex justify-between '>
                 <span>Subtotal</span>
-                <p className='text-right'>{idrFormatter(cartItems.totalPrice)}</p>
+                <p className='text-right'>Rp 123.000,-</p>
               </div>
               <p className='mb-5 text-center text-xs text-gray-500'>
                 Shipping, taxes, and discount codes calculated at checkout.
