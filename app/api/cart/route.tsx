@@ -18,12 +18,15 @@ export async function POST(req: Request) {
     )
   }
 
+  // get products based on id from cart store
+  // inject quantity for that product from cart store
   const products: any = []
   for (let i = 0; i < cartItemsStore.length; ++i) {
     const product = allProducts.find(
       (product) => product.id === cartItemsStore[i].id,
     )
-    products.push(product)
+    const quantity = cartItemsStore[i].quantity
+    products.push({...product, quantity: quantity})
   }
 
   const totalQuantity = countTotalQuantity(cartItemsStore)

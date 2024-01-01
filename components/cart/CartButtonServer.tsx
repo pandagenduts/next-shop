@@ -49,9 +49,6 @@ export default function CartButtonServer() {
 
   const handleClose = () => setIsOpen(false)
 
-  // console.log('cart items:', cartItems)
-  // console.log('zustand:', cartItemsStore)
-
   useEffect(() => {
     setIsFetching(true)
     fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/cart`, {
@@ -68,6 +65,10 @@ export default function CartButtonServer() {
         setCartItems(cartData)
         console.log(cartData)
       })
+      .catch((err) => {
+        setIsFetching(false)
+        throw new Error(err)
+      })
   }, [cartItemsStore])
 
   return (
@@ -81,20 +82,20 @@ export default function CartButtonServer() {
       <SheetContent className='flex w-full flex-col min-[500px]:max-w-sm sm:max-w-md'>
         <SheetHeader className='mb-4'>
           <SheetTitle>Cart</SheetTitle>
-          {cartItemsStore.length === 0 && (
+          {cartItems.items.length === 0 && (
             <SheetDescription>Cart is empty</SheetDescription>
           )}
         </SheetHeader>
-        {cartItemsStore.length !== 0 && (
+        {cartItems.items.length !== 0 && (
           <div className='flex flex-1 flex-col gap-8 overflow-y-hidden'>
             <div className='flex flex-1 flex-col gap-4 overflow-hidden overflow-y-auto'>
-              {cartItemsStore.map((item) => (
+              {cartItems.items.map((item) => (
                 // <CartItem key={item.id} data={item} handleSheetClose={handleClose} />
                 <div className='flex gap-4' key={item.id}>
                   <div className='max-w-[90px]'>
                     <Link href='/' onClick={handleClose}>
                       <Image
-                        src='/products/corte-1.webp'
+                        src={item.thumbnail}
                         width={90}
                         height={90}
                         alt='product'
@@ -120,7 +121,7 @@ export default function CartButtonServer() {
                             strokeWidth={4}
                           />
                         </Button>
-                        <span>1</span>
+                        <span>{item.quantity}</span>
                         <Button
                           onClick={() => addItemToCart(item.id)}
                           className='h-auto cursor-pointer p-[6px]'
@@ -134,7 +135,7 @@ export default function CartButtonServer() {
                           />
                         </Button>
                       </div>
-                      <div>Rp 123.000,-</div>
+                      <div>{idrFormatter(item.price)}-</div>
                     </div>
                   </div>
                 </div>
@@ -144,7 +145,7 @@ export default function CartButtonServer() {
             <div>
               <div className='mb-5 flex justify-between '>
                 <span>Subtotal</span>
-                <p className='text-right'>Rp 123.000,-</p>
+                <p className='text-right'>{idrFormatter(cartItems.totalPrice)}</p>
               </div>
               <p className='mb-5 text-center text-xs text-gray-500'>
                 Shipping, taxes, and discount codes calculated at checkout.
