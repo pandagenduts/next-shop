@@ -10,8 +10,8 @@ export async function POST(req: Request) {
       {
         message: {
           items: cartItemsStore,
-          totalQuantity: 0,
-          totalPrice: 0,
+          total_quantity: 0,
+          total_price: 0,
         },
       },
       { status: 200 },
@@ -29,15 +29,15 @@ export async function POST(req: Request) {
     products.push({...product, quantity: quantity})
   }
 
-  const totalQuantity = countTotalQuantity(cartItemsStore)
-  const totalPrice = countTotalPrice(cartItemsStore, products)
+  const total_quantity = countTotalQuantity(cartItemsStore)
+  const total_price = countTotalPrice(cartItemsStore, products)
 
   return NextResponse.json(
     {
       message: {
         items: products,
-        totalQuantity: totalQuantity,
-        totalPrice: totalPrice,
+        total_quantity: total_quantity,
+        total_price: total_price,
       },
     },
     { status: 200 },

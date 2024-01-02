@@ -22,8 +22,8 @@ export type ExtendedCartItems = ProductType & {
 
 type CartItems = {
   items: ExtendedCartItems[] | []
-  totalQuantity: number
-  totalPrice: number
+  total_quantity: number
+  total_price: number
 }
 
 export default function CartButtonServer() {
@@ -32,8 +32,8 @@ export default function CartButtonServer() {
   const [isFetching, setIsFetching] = useState(false)
   const [cartItems, setCartItems] = useState<CartItems>({
     items: [],
-    totalQuantity: 0,
-    totalPrice: 0,
+    total_quantity: 0,
+    total_price: 0,
   })
 
   const handleClose = () => setIsOpen(false)
@@ -64,7 +64,7 @@ export default function CartButtonServer() {
       <SheetTrigger asChild>
         <Button variant='outline' className='rounded-full'>
           <ShoppingCart className='mr-2 h-4 w-4' />
-          <span>{cartItems.totalQuantity}</span>
+          <span>{cartItems.total_quantity}</span>
         </Button>
       </SheetTrigger>
       <SheetContent className='flex w-full flex-col min-[500px]:max-w-sm sm:max-w-md'>
@@ -85,7 +85,7 @@ export default function CartButtonServer() {
               <div className='mb-5 flex justify-between '>
                 <span>Subtotal</span>
                 <p className='text-right'>
-                  {idrFormatter(cartItems.totalPrice)}
+                  {idrFormatter(cartItems.total_price)}
                 </p>
               </div>
               <p className='mb-5 text-center text-xs text-gray-500'>
