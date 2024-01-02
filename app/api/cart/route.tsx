@@ -8,11 +8,9 @@ export async function POST(req: Request) {
   if (cartItemsStore.length === 0) {
     return NextResponse.json(
       {
-        message: {
-          items: cartItemsStore,
-          total_quantity: 0,
-          total_price: 0,
-        },
+        items: cartItemsStore,
+        total_quantity: 0,
+        total_price: 0,
       },
       { status: 200 },
     )
@@ -22,11 +20,9 @@ export async function POST(req: Request) {
   // inject quantity for that product from cart store
   const products: any = []
   for (let i = 0; i < cartItemsStore.length; ++i) {
-    const product = allProducts.find(
-      (product) => product.id === cartItemsStore[i].id,
-    )
+    const product = allProducts.find((product) => product.id === cartItemsStore[i].id)
     const quantity = cartItemsStore[i].quantity
-    products.push({...product, quantity: quantity})
+    products.push({ ...product, quantity: quantity })
   }
 
   const total_quantity = countTotalQuantity(cartItemsStore)
