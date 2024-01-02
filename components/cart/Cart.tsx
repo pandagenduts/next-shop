@@ -42,17 +42,30 @@ export default function CartButtonServer() {
   useEffect(() => {
     ;(async () => {
       setIsFetching(true)
+      try {
+        const cartData = await ky
+          .post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/cart`, { json: cartItemsStore })
+          .json()
 
-      ky.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/cart`, { json: cartItemsStore })
-        .json()
-        .then((data) => {
-          setCartItems(data as CartItems)
-          setIsFetching(false)
-        })
-        .catch((err) => {
-          setIsFetching(false)
-          console.log(err)
-        })
+        console.log(cartData)
+        setCartItems(cartData as CartItems)
+        setIsFetching(false)
+      } catch (err) {
+        setIsFetching(false)
+        console.log(err)
+      }
+
+      // ky.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/cart`, { json: cartItemsStore })
+      //   .json()
+      //   .then((data) => {
+      //     console.log(data)
+      //     // setCartItems(data as CartItems)
+      //     // setIsFetching(false)
+      //   })
+      //   .catch((err) => {
+      //     setIsFetching(false)
+      //     console.log(err)
+      //   })
     })()
   }, [cartItemsStore])
 
