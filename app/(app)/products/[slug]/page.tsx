@@ -15,7 +15,7 @@ export default function Page({ params }: { params: { slug: string } }) {
   const { name, price, description, gallery, id } = productData
   const formattedPrice = idrFormatter(price)
 
-  const { addItemToCart, cartItemsStore, removeItemFromCart } = useCartStore()
+  const { addItemToCart } = useCartStore()
 
   return (
     <>

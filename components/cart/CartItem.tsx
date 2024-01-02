@@ -2,20 +2,21 @@ import { Minus, Plus } from 'lucide-react'
 import { Button } from '../ui/button'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ProductType } from '@/lib/types'
 import { idrFormatter } from '@/lib/utils'
 import useCartStore from '@/store/cart-store'
+import { ExtendedCartItems } from './Cart'
 
 type PropsType = {
-  data: ProductType & { quantity: number }
+  data: ExtendedCartItems
+  isFetching: boolean
   handleSheetClose: () => void
 }
 
 export default function CartItem(props: PropsType) {
-  const { id, name, price, thumbnail, quantity, slug } = props.data
-  const formattedPrice = idrFormatter(price)
-
   const { addItemToCart, removeItemFromCart } = useCartStore()
+  const { id, name, price, thumbnail, quantity, slug } = props.data
+
+  const formattedPrice = idrFormatter(price)
 
   return (
     <div className='flex gap-4'>
@@ -31,7 +32,11 @@ export default function CartItem(props: PropsType) {
         </Link>
       </div>
       <div className='flex flex-1 flex-col justify-between'>
-        <Link href={`/products/${slug}`} className='font-bold' onClick={props.handleSheetClose}>
+        <Link
+          href={`/products/${slug}`}
+          className='font-bold'
+          onClick={props.handleSheetClose}
+        >
           Corte Mid Full Black
         </Link>
         <div className='flex justify-between gap-4'>
@@ -40,6 +45,7 @@ export default function CartItem(props: PropsType) {
               onClick={() => removeItemFromCart(id)}
               className='h-auto cursor-pointer p-[6px]'
               variant='outline'
+              disabled={props.isFetching}
             >
               <Minus className='cursor-pointer' size={8} strokeWidth={4} />
             </Button>
@@ -48,6 +54,7 @@ export default function CartItem(props: PropsType) {
               onClick={() => addItemToCart(id)}
               className='h-auto cursor-pointer p-[6px]'
               variant='outline'
+              disabled={props.isFetching}
             >
               <Plus className='cursor-pointer' size={8} strokeWidth={4} />
             </Button>
