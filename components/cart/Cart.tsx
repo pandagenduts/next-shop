@@ -15,6 +15,7 @@ import CartItem from './CartItem'
 import useCartStore from '@/store/cart-store'
 import { idrFormatter } from '@/lib/utils'
 import { ProductType } from '@/lib/types'
+import ky from 'ky'
 
 export type ExtendedCartItems = ProductType & {
   quantity: number
@@ -39,24 +40,20 @@ export default function CartButtonServer() {
   const handleClose = () => setIsOpen(false)
 
   useEffect(() => {
-    setIsFetching(true)
-    fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/cart`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(cartItemsStore),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        const cartData = data.message
-        setIsFetching(false)
-        setCartItems(cartData)
-      })
-      .catch((err) => {
-        setIsFetching(false)
-        throw new Error(err)
-      })
+    ;(async () => {
+      setIsFetching(true)
+
+      ky.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/cart`, { json: cartItemsStore })
+        .json()
+        .then((data) => {
+          setCartItems(data as CartItems)
+          setIsFetching(false)
+        })
+        .catch((err) => {
+          setIsFetching(false)
+          console.log(err)
+        })
+    })()
   }, [cartItemsStore])
 
   return (
@@ -70,23 +67,24 @@ export default function CartButtonServer() {
       <SheetContent className='flex w-full flex-col min-[500px]:max-w-sm sm:max-w-md'>
         <SheetHeader className='mb-4'>
           <SheetTitle>Cart</SheetTitle>
-          {cartItems.items.length === 0 && (
-            <SheetDescription>Cart is empty</SheetDescription>
-          )}
+          {cartItems.items.length === 0 && <SheetDescription>Cart is empty</SheetDescription>}
         </SheetHeader>
         {cartItems.items.length !== 0 && (
           <div className='flex flex-1 flex-col gap-8 overflow-y-hidden'>
             <div className='flex flex-1 flex-col gap-4 overflow-hidden overflow-y-auto'>
               {cartItems.items.map((item) => (
-                <CartItem key={item.id} data={item} isFetching={isFetching} handleSheetClose={handleClose} />
+                <CartItem
+                  key={item.id}
+                  data={item}
+                  isFetching={isFetching}
+                  handleSheetClose={handleClose}
+                />
               ))}
             </div>
             <div>
               <div className='mb-5 flex justify-between '>
                 <span>Subtotal</span>
-                <p className='text-right'>
-                  {idrFormatter(cartItems.total_price)}
-                </p>
+                <p className='text-right'>{idrFormatter(cartItems.total_price)}</p>
               </div>
               <p className='mb-5 text-center text-xs text-gray-500'>
                 Shipping, taxes, and discount codes calculated at checkout.
