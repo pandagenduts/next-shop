@@ -34,11 +34,9 @@ export async function POST(req: Request) {
 
   return NextResponse.json(
     {
-      message: {
-        items: products,
-        total_quantity: total_quantity,
-        total_price: total_price,
-      },
+      items: products,
+      total_quantity: total_quantity,
+      total_price: total_price,
     },
     { status: 200 },
   )
