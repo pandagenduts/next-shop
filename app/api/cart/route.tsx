@@ -3,7 +3,8 @@ import { allProducts } from '@/data/data'
 import { countTotalPrice, countTotalQuantity } from '@/lib/utils'
 
 export async function POST(req: Request) {
-  const cartItemsStore = await req.json()
+  const body = await req.json()
+  const cartItemsStore = body
 
   if (cartItemsStore.length === 0) {
     return NextResponse.json(
