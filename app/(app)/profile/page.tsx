@@ -4,24 +4,28 @@ import useCartStore from '@/store/cart-store'
 import ky from 'ky'
 import { useEffect } from 'react'
 
+type Token = {
+  token: string
+  redirect_url: string
+}
+
 export default function Page() {
   const { cartItemsStore } = useCartStore()
 
   const handleGetProduct = async () => {
-    const token = await ky.post(`/api/midtrans/generate-token`, { json: cartItemsStore }).json()
+    const token: Token = await ky.post(`/api/midtrans/generate-token`, { json: cartItemsStore }).json()
 
-    console.log(token)
     window.snap.embed(token.token, {
       embedId: 'snap-container',
-      onSuccess: function (result) {
+      onSuccess: function (result: any) {
         alert('payment success!');
         console.log(result);
       },
-      onPending: function (result) {
+      onPending: function (result: any) {
         alert('wating your payment!');
         console.log(result);
       },
-      onError: function (result) {
+      onError: function (result: any) {
         alert('payment failed!');
         console.log(result);
       },
