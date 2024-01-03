@@ -4,7 +4,6 @@ export async function POST(req: Request) {
   const body = await req.json()
   const items = body.items
   const total_price = body.total_price
-  const order_id = body.order_id
 
   const updatedItems = items.map((item: any) => {
     return {
@@ -22,6 +21,5 @@ export async function POST(req: Request) {
   return NextResponse.json({
     items: updatedItems,
     gross_amount: total_price,
-    order_id: order_id,
   })
 }
