@@ -42,7 +42,7 @@ export default function CartButtonServer() {
   useEffect(() => {
     ;(async () => {
       setIsFetching(true)
-      ky.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/cart`, { json: cartItemsStore })
+      ky.post(`/api/cart`, { json: cartItemsStore })
         .json()
         .then((data) => {
           setCartItems(data as CartItems)
