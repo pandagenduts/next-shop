@@ -6,7 +6,7 @@ import { ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
 
-export default function page({ params }: { params: { order_id: string } }) {
+export default function Page({ params }: { params: { order_id: string } }) {
   const { order_id } = params
 
   return (

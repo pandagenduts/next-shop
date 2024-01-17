@@ -8,7 +8,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
 export default function layout({ children }: { children: React.ReactNode }) {
-  const pathname = usePathname()
+  const pathname = usePathname() as string
   const urlSplit = pathname.split('/')
   // check if user is on order details, hide the menu on mobile
   const orderDetailsPage = isOrderDetails(urlSplit)

@@ -2,10 +2,12 @@
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 import { FormEventHandler } from 'react'
 
 export default function Page() {
+
   const handleLogin: FormEventHandler = (e) => {
     e.preventDefault()
   }
