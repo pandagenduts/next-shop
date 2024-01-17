@@ -25,7 +25,7 @@ export default function page() {
             <Input type='email' id='email' placeholder='Email' required />
           </div>
 
-          <div>
+          <div className='mb-6'>
             <div className='flex justify-between'>
               <label htmlFor='password' className='mb-2 block font-medium'>
                 Password
