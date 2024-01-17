@@ -1,9 +1,10 @@
 import { Button } from '@/components/ui/button'
+import Link from 'next/link'
 
 export default function LoginButton() {
   return (
     <Button size='sm'>
-      Log in
+      <Link href='/login'>Log in</Link>
     </Button>
   )
 }

@@ -23,8 +23,8 @@ export default function Header() {
 
       <div className='flex items-center gap-4'>
         <Cart />
-        {/* <LoginButton /> */}
-        <UserAccountNav />
+        <LoginButton />
+        {/* <UserAccountNav /> */}
       </div>
     </header>
   )
