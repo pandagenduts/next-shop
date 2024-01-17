@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input'
 import Link from 'next/link'
 import { FormEventHandler } from 'react'
 
-export default function page() {
+export default function Page() {
   const handleForgotPassword: FormEventHandler = (e) => {
     e.preventDefault()
   }
