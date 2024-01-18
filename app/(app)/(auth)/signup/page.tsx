@@ -1,12 +1,13 @@
 'use client'
 
-import { auth } from '@/app/firebase'
+import { auth, db } from '@/app/firebase'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { FormEventHandler, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import { doc, setDoc } from 'firebase/firestore/lite'
 
 export default function Page() {
   const [errorStatus, setErrorStatus] = useState('')
@@ -17,22 +18,42 @@ export default function Page() {
   })
   const router = useRouter()
 
-  const handleSignup: FormEventHandler = (e) => {
+  const handleSignup: FormEventHandler = async (e) => {
     e.preventDefault()
+    setErrorStatus('')
+    setSuccess(false)
 
-    createUserWithEmailAndPassword(auth, signupData.email, signupData.password)
-      .then((response) => {
-        // console.log(response)
-        setErrorStatus('')
-        setSuccess(true)
-        setTimeout(() => {
-          router.push('/login')
-        }, 5000)
+    try {
+      const response = await createUserWithEmailAndPassword(
+        auth,
+        signupData.email,
+        signupData.password,
+      )
+
+      const uid = response.user.uid
+      const email = response.user.email
+
+      // create user document on firestore with uid
+      setDoc(doc(db, 'users', uid), {
+        email: email,
       })
-      .catch((error) => {
-        // console.log(error)
-        setErrorStatus(error.code)
-      })
+        .then(() => {
+          // executed if document successfully created
+          setErrorStatus('')
+          setSuccess(true)
+          setTimeout(() => {
+            router.push('/login')
+          }, 5000)
+        })
+        .catch((error) => {
+          // executed if document failed to create
+          console.log(error)
+          setErrorStatus(error.code)
+        })
+    } catch (error: any) {
+      // console.log(error)
+      setErrorStatus(error.code)
+    }
   }
 
   return (
