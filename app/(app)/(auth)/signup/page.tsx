@@ -17,7 +17,6 @@ export default function Page() {
   })
   const router = useRouter()
 
-
   const handleSignup: FormEventHandler = (e) => {
     e.preventDefault()
 
@@ -54,7 +53,10 @@ export default function Page() {
               placeholder='Email'
               required
               value={signupData.email}
-              onChange={(e) => setSignupData((prev) => ({ ...prev, email: e.target.value }))}
+              onChange={(e) => {
+                setErrorStatus('')
+                setSignupData((prev) => ({ ...prev, email: e.target.value }))
+              }}
             />
           </div>
 
@@ -70,7 +72,10 @@ export default function Page() {
               placeholder='Password'
               required
               value={signupData.password}
-              onChange={(e) => setSignupData((prev) => ({ ...prev, password: e.target.value }))}
+              onChange={(e) => {
+                setErrorStatus('')
+                setSignupData((prev) => ({ ...prev, password: e.target.value }))
+              }}
             />
           </div>
 
