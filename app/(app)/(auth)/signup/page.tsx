@@ -22,7 +22,7 @@ export default function Page() {
 
     createUserWithEmailAndPassword(auth, signupData.email, signupData.password)
       .then((response) => {
-        console.log(response)
+        // console.log(response)
         setErrorStatus('')
         setSuccess(true)
         setTimeout(() => {
@@ -30,7 +30,7 @@ export default function Page() {
         }, 5000)
       })
       .catch((error) => {
-        console.log(error)
+        // console.log(error)
         setErrorStatus(error.code)
       })
   }

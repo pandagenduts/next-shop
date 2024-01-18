@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import { FormEventHandler, useState } from 'react'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { signIn } from 'next-auth/react'
 
 export default function Page() {
   const [errorStatus, setErrorStatus] = useState('')
@@ -15,14 +15,15 @@ export default function Page() {
     email: '',
     password: '',
   })
-  const router = useRouter()
 
   const handleLogin: FormEventHandler = (e) => {
     e.preventDefault()
 
     signInWithEmailAndPassword(auth, loginData.email, loginData.password)
       .then((response) => {
+        // executed if sign in was successful
         console.log(response.user)
+        // reset all the state
         setErrorStatus('')
         setSuccess(true)
         setLoginData({
@@ -30,11 +31,16 @@ export default function Page() {
           password: '',
         })
 
-        setTimeout(() => {
-          router.push('/')
-        }, 5000)
+        // login with next auth
+        signIn('credentials', {
+          email: loginData.email,
+          password: loginData.password,
+          redirect: true,
+          callbackUrl: '/',
+        })
       })
       .catch((error) => {
+        // executed if sign in was not successful
         console.log(error)
         error.code == 'auth/invalid-credential'
           ? setErrorStatus('The email and password did not match. Please try again.')
@@ -67,7 +73,7 @@ export default function Page() {
             />
           </div>
 
-          <div className='mb-6'>
+          <div className='mb-12'>
             <div className='flex justify-between'>
               <label htmlFor='password' className='mb-2 block font-medium'>
                 Password
