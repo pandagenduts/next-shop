@@ -1,5 +1,10 @@
 import { NextResponse } from 'next/server'
 
+export type Api_Midtrans_Generate_Checkout_Data = {
+  items: any
+  gross_amount: number
+}
+
 export async function POST(req: Request) {
   const body = await req.json()
   const items = body.items

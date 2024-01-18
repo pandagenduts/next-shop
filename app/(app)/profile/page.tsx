@@ -14,6 +14,7 @@ export default function Page() {
 
   const handleGetProduct = async () => {
     const token: Token = await ky.post(`/api/midtrans/generate-token`, { json: cartItemsStore }).json()
+    console.log(token.token)
 
     window.snap.embed(token.token, {
       embedId: 'snap-container',

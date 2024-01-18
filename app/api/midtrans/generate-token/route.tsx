@@ -2,16 +2,19 @@ import { NextResponse } from 'next/server'
 const midtransClient = require('midtrans-client')
 import ky from 'ky'
 import { randomNumber } from '@/lib/faker'
+import { ApiCart } from '../../cart/route'
+import { Api_Midtrans_Generate_Checkout_Data } from '../generate-checkout-data/route'
+import { CartItemsStore } from '@/store/cart-store'
 
 export async function POST(req: Request) {
   const body = await req.json()
-  const cartItemsStore = body
+  const cartItemsStore: CartItemsStore[] = body
 
-  const products: any = await ky
+  const products: ApiCart = await ky
     .post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/cart`, { json: cartItemsStore })
     .json()
 
-  const checkoutData: any = await ky
+  const checkoutData: Api_Midtrans_Generate_Checkout_Data = await ky
     .post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/midtrans/generate-checkout-data`, {
       json: products,
     })
