@@ -37,7 +37,7 @@ export default function CartItem(props: PropsType) {
           className='font-bold'
           onClick={props.handleSheetClose}
         >
-          Corte Mid Full Black
+          {name}
         </Link>
         <div className='flex justify-between gap-4'>
           <div className='flex w-full max-w-[80px] items-center justify-between'>
