@@ -5,7 +5,6 @@ import { authOptions } from '@/pages/api/auth/[...nextauth]'
 import { getServerSession } from 'next-auth/next'
 import { Session } from 'next-auth'
 import { Api_Midtrans_Generate_Checkout_Data } from '../../midtrans/generate-checkout-data/route'
-import { ApiCart } from '../../cart/route'
 import ky from 'ky'
 import { CartItemsStore } from '@/store/cart-store'
 
@@ -21,33 +20,31 @@ export async function POST(req: Request) {
   const body = await req.json()
   const cartItemsStore: CartItemsStore[] = body
 
-  const products: ApiCart = await ky
-  .post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/cart`, { json: cartItemsStore })
-  .json()
-
   const checkoutData: Api_Midtrans_Generate_Checkout_Data = await ky
   .post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/midtrans/generate-checkout-data`, {
-    json: products,
+    json: cartItemsStore,
   })
   .json()
 
   console.log(checkoutData)
 
+  return NextResponse.json(checkoutData)
+
   // generate token
 
   // create document
-  try {
-    const docRef = await addDoc(collection(db, 'users', uid, 'orders'), {
-      date: serverTimestamp(),
-      gross_amount: checkoutData.gross_amount,
-      payment_status: 'pending',
-      products: checkoutData.items,
-    })
-    console.log(docRef)
+  // try {
+  //   const docRef = await addDoc(collection(db, 'users', uid, 'orders'), {
+  //     date: serverTimestamp(),
+  //     gross_amount: checkoutData.gross_amount,
+  //     payment_status: 'pending',
+  //     products: checkoutData.items,
+  //   })
+  //   console.log(docRef)
 
-    return NextResponse.json(docRef)
-  } catch (error) {
-    console.log(error)
-    return NextResponse.json(error, { status: 500 })
-  }
+  //   return NextResponse.json(docRef)
+  // } catch (error) {
+  //   console.log(error)
+  //   return NextResponse.json(error, { status: 500 })
+  // }
 }
