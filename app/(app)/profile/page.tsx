@@ -53,7 +53,7 @@ export default function Page() {
 
   const handleCreateDocument = async () => {
     try {
-      const addDocument = await ky.post('/api/firestore/create-order', { json: 'asd' }).json()
+      const addDocument = await ky.post('/api/firestore/create-order', { json: cartItemsStore }).json()
 
       console.log(addDocument)
     } catch (error) {

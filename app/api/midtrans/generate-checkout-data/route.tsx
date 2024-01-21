@@ -16,6 +16,7 @@ export async function POST(req: Request) {
       price: item.price,
       quantity: item.quantity,
       name: item.name,
+      thumbnail: item.thumbnail,
       brand: 'Next Shop',
       category: 'Shoes',
       merchant_name: 'Next Shop',

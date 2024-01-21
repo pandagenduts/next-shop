@@ -20,6 +20,7 @@ export async function POST(req: Request) {
     })
     .json()
 
+  console.log(checkoutData)
 
   // the Midtrans Part - Generate Token
   let snap = new midtransClient.Snap({
@@ -44,4 +45,3 @@ export async function POST(req: Request) {
 
   return NextResponse.json(token)
 }
-
