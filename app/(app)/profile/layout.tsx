@@ -1,5 +1,6 @@
 'use client'
 
+import TanstackQueryProvier from '@/components/TanstackQueryProvier'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { profileMenu } from '@/lib/config'
@@ -15,12 +16,7 @@ export default function layout({ children }: { children: React.ReactNode }) {
 
   return (
     <div className='flex flex-col gap-5 md:flex-row md:gap-10'>
-      <div
-        className={cn(
-          'flex-1 md:max-w-[200px]',
-          orderDetailsPage ? 'hidden md:block' : '',
-        )}
-      >
+      <div className={cn('flex-1 md:max-w-[200px]', orderDetailsPage ? 'hidden md:block' : '')}>
         <h4 className='mb-2 hidden md:block'>Menu</h4>
         <div className='flex gap-1 overflow-auto md:flex-col md:overflow-visible'>
           {profileMenu.map((menu) => (
@@ -39,10 +35,10 @@ export default function layout({ children }: { children: React.ReactNode }) {
           ))}
         </div>
       </div>
-      <Separator
-        className={cn('block md:hidden', orderDetailsPage ? 'hidden' : '')}
-      />
-      <div className='flex-1'>{children}</div>
+      <Separator className={cn('block md:hidden', orderDetailsPage ? 'hidden' : '')} />
+      <div className='flex-1'>
+        <TanstackQueryProvier>{children}</TanstackQueryProvier>
+      </div>
     </div>
   )
 }

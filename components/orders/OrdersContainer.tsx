@@ -1,10 +1,10 @@
 'use client'
 
-import { useEffect, useState } from 'react'
 import OrdersCard from './OrdersCard'
 import OrdersEmptyPlaceholder from './OrdersEmptyPlaceholder'
-import { collection, getDocs } from 'firebase/firestore/lite'
-import { db } from '@/app/firebase'
+import { useQuery } from '@tanstack/react-query'
+import { getOrders } from '@/lib/actions/firestore/get-orders'
+import LoadingSpinner from '../LoadingSpinner'
 
 type Props = {
   uid: string
@@ -12,30 +12,38 @@ type Props = {
 
 export default function OrdersContainer(props: Props) {
   const uid = props.uid
-  const [orders, setOrders] = useState<any>([])
+  const {
+    data: datas,
+    isLoading,
+    isError,
+    error,
+  } = useQuery({
+    queryKey: ['orders'],
+    queryFn: async () => getOrders(uid),
+  })
 
-  useEffect(() => {
-    ;(async () => {
-      try {
-        const docRef = collection(db, 'users', uid, 'orders')
-        const docs = await getDocs(docRef)
+  if (isLoading) {
+    return (
+      <div className='flex w-full justify-center pt-8'>
+        <p className='flex gap-4'>
+          <LoadingSpinner /> Loading...
+        </p>
+      </div>
+    )
+  }
 
-        let datas: any = []
-        docs.forEach((doc) => {
-          const data = { ...doc.data(), id: doc.id }
-          datas.push(data)
-        })
-        setOrders(datas)
-      } catch (error) {}
-    })()
-  }, [])
-
-  console.log(orders)
+  let orders: any = []
+  datas?.forEach((item: any) => {
+    const data = { ...item.data(), order_id: item.id }
+    orders.push(data)
+  })
 
   return (
     <>
-      <div className='flex flex-col gap-4'>{orders && orders.map((order) => <OrdersCard key={order.id} />)}</div>
-      {/* <OrdersEmptyPlaceholder /> */}
+      <div className='flex flex-col gap-4'>
+        {orders.length === 0 && <OrdersEmptyPlaceholder />}
+        {orders && orders.map((doc: any) => <OrdersCard key={doc.id} />)}
+      </div>
     </>
   )
 }
