@@ -19,7 +19,7 @@ export default function OrdersContainer(props: Props) {
     error,
   } = useQuery({
     queryKey: ['orders'],
-    queryFn: async () => getOrders(uid),
+    queryFn: async () => await getOrders(uid),
   })
 
   if (isLoading) {
@@ -44,7 +44,7 @@ export default function OrdersContainer(props: Props) {
     <>
       <div className='flex flex-col gap-4'>
         {orders.length === 0 && <OrdersEmptyPlaceholder />}
-        {orders && orders.map((order: any) => <OrdersCard key={order.id} data={order} />)}
+        {orders && orders.map((order: any) => <OrdersCard key={order.order_id} data={order} />)}
       </div>
     </>
   )

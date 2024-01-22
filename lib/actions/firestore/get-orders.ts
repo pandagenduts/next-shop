@@ -1,5 +1,5 @@
-import { db } from "@/app/firebase"
-import { collection, getDocs } from "firebase/firestore/lite"
+import { db } from '@/app/firebase'
+import { collection, getDocs } from 'firebase/firestore/lite'
 
 export async function getOrders(uid: string) {
   try {

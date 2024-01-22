@@ -29,7 +29,7 @@ export async function generateCheckoutData(cartItemsStore: CartItemsStore[]) {
       brand: 'Next Shop',
       category: 'Shoes',
       merchant_name: 'Next Shop',
-      url: `https://next-shop-flax-one.vercel.app/products/${item.slug}`,
+      url: `${process.env.NEXT_PUBLIC_BASE_URL}/products/${item.slug}`,
     }
   })
 
