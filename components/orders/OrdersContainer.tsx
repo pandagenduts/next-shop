@@ -13,7 +13,7 @@ type Props = {
 export default function OrdersContainer(props: Props) {
   const uid = props.uid
   const {
-    data: datas,
+    data,
     isLoading,
     isError,
     error,
@@ -32,19 +32,13 @@ export default function OrdersContainer(props: Props) {
     )
   }
 
-  let orders: any = []
-  datas?.forEach((item: any) => {
-    const data = { ...item.data(), order_id: item.id }
-    orders.push(data)
-  })
-
-  console.log(orders)
+  console.log(data)
 
   return (
     <>
       <div className='flex flex-col gap-4'>
-        {orders.length === 0 && <OrdersEmptyPlaceholder />}
-        {orders && orders.map((order: any) => <OrdersCard key={order.order_id} data={order} />)}
+        {!data && <OrdersEmptyPlaceholder />}
+        {data && data.map((order: any) => <OrdersCard key={order.order_id} data={order} />)}
       </div>
     </>
   )
