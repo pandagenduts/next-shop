@@ -8,12 +8,12 @@ import { Api_Midtrans_Generate_Checkout_Data } from '../../midtrans/generate-che
 import ky from 'ky'
 import { CartItemsStore } from '@/store/cart-store'
 
-type ExtendedSession = Session & {
+type ExtendedServerSession = Session & {
   uid: string
 } | null
 
 export async function POST(req: Request) {
-  const session: ExtendedSession = await getServerSession(authOptions)
+  const session: ExtendedServerSession = await getServerSession(authOptions)
   if (!session) return NextResponse.json('What r u looking for man? u r not logged in!')
 
   const uid = session.uid
@@ -26,25 +26,18 @@ export async function POST(req: Request) {
   })
   .json()
 
-  console.log(checkoutData)
-
-  return NextResponse.json(checkoutData)
-
-  // generate token
-
   // create document
-  // try {
-  //   const docRef = await addDoc(collection(db, 'users', uid, 'orders'), {
-  //     date: serverTimestamp(),
-  //     gross_amount: checkoutData.gross_amount,
-  //     payment_status: 'pending',
-  //     products: checkoutData.items,
-  //   })
-  //   console.log(docRef)
+  try {
+    const docRef = await addDoc(collection(db, 'users', uid, 'orders'), {
+      date: serverTimestamp(),
+      gross_amount: checkoutData.gross_amount,
+      payment_status: 'pending',
+      products: checkoutData.items,
+    })
 
-  //   return NextResponse.json(docRef)
-  // } catch (error) {
-  //   console.log(error)
-  //   return NextResponse.json(error, { status: 500 })
-  // }
+    return NextResponse.json(docRef.id)
+  } catch (error) {
+    console.log(error)
+    return NextResponse.json(error, { status: 500 })
+  }
 }
