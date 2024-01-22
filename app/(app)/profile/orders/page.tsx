@@ -1,15 +1,12 @@
-import OrdersEmptyPlaceholder from '@/components/orders/OrdersEmptyPlaceholder'
-import OrdersCard from '@/components/orders/OrdersCard'
+import serverUid from '@/lib/actions/auth/server-uid'
+import OrdersContainer from '@/components/orders/OrdersContainer'
 
-export default function Page() {
+export default async function Page() {
+  const uid = (await serverUid()) as string
+
   return (
     <>
-      <div className='flex flex-col gap-4'>
-        <OrdersCard />
-        <OrdersCard />
-        <OrdersCard />
-      </div>
-      {/* <OrdersEmptyPlaceholder /> */}
+      <OrdersContainer uid={uid} />
     </>
   )
 }
