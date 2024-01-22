@@ -1,19 +1,19 @@
 import { NextResponse } from 'next/server'
 const midtransClient = require('midtrans-client')
-import ky from 'ky'
 import { randomNumber } from '@/lib/faker'
+import ky from 'ky'
 import { Api_Midtrans_Generate_Checkout_Data } from '../generate-checkout-data/route'
 import { CartItemsStore } from '@/store/cart-store'
 
+export type Api_Midtrans_Generate_Token = {
+  token: string
+  redirect_url: string
+}
+
 export async function POST(req: Request) {
   const body = await req.json()
-  const cartItemsStore: CartItemsStore[] = body
-
-  const checkoutData: Api_Midtrans_Generate_Checkout_Data = await ky
-    .post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/midtrans/generate-checkout-data`, {
-      json: cartItemsStore,
-    })
-    .json()
+  const checkoutData: Api_Midtrans_Generate_Checkout_Data = body
+  
 
   // the Midtrans Part - Generate Token
   let snap = new midtransClient.Snap({
@@ -34,7 +34,7 @@ export async function POST(req: Request) {
     },
   })
 
-  const token = await snap.createTransaction(parameter)
+  const token: Api_Midtrans_Generate_Token = await snap.createTransaction(parameter)
 
   return NextResponse.json(token)
 }
