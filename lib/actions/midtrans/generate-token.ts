@@ -6,6 +6,8 @@ export type Midtrans_Generate_Token = {
   redirect_url: string
 }
 
+// helper function to generate token from Midtrans
+
 export async function generateToken(
   checkoutData: Midtrans_Checkout_Data,
   orderId: string,

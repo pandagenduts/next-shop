@@ -6,9 +6,12 @@ import { Api_Midtrans_Generate_Token } from '../generate-token/route'
 import { Api_Midtrans_Generate_Checkout_Data } from '../generate-checkout-data/route'
 import ky from 'ky'
 import { UpdateOrder } from '@/lib/actions/firestore/update-order'
-import { Midtrans_Checkout_Data, generateCheckoutData } from '@/lib/actions/midtrans/generate-checkout-data'
+import {
+  Midtrans_Checkout_Data,
+  generateCheckoutData,
+} from '@/lib/actions/midtrans/generate-checkout-data'
 import { addNewOrder } from '@/lib/actions/firestore/add-new-order'
-import { generateToken } from '@/lib/actions/midtrans/generate-token'
+import { Midtrans_Generate_Token, generateToken } from '@/lib/actions/midtrans/generate-token'
 
 export type Api_Midtrans_Create_Order = {
   orderId: string
@@ -22,17 +25,17 @@ export async function POST(req: Request) {
   const cartItemsStore: CartItemsStore[] = body
   const uid = session.uid
 
-  // midtrans: generate checkout data
+  // midtrans: generate checkout data from zustand cart items store
   const checkoutData: Midtrans_Checkout_Data = await generateCheckoutData(cartItemsStore)
 
   // firestore: add new order document
-  const orderId: string = await addNewOrder(uid, checkoutData) as string
+  const orderId: string = (await addNewOrder(uid, checkoutData)) as string
 
   // midtrans: generate token
-  const token = await generateToken(checkoutData, orderId)
+  const token: Midtrans_Generate_Token = await generateToken(checkoutData, orderId)
 
   // firestore: add the token to the order document
-  const update = await UpdateOrder(uid, orderId, { token: token.token })
+  const update: string = (await UpdateOrder(uid, orderId, { token: token.token })) as string
 
-  return NextResponse.json({orderId: orderId})
+  return NextResponse.json({ orderId: orderId })
 }

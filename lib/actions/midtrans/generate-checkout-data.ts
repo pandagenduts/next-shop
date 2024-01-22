@@ -8,6 +8,8 @@ export type Midtrans_Checkout_Data = {
   total_quantity: number
 }
 
+// generate checkout data from zustand cart items store
+
 export async function generateCheckoutData(cartItemsStore: CartItemsStore[]) {
   const products: ApiCart = await ky
   .post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/cart`, { json: cartItemsStore })
