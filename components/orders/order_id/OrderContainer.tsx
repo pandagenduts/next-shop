@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button'
 import { getOrder } from '@/lib/actions/firestore/get-order'
 import LoadingSpinner from '@/components/LoadingSpinner'
 import { idrFormatter } from '@/lib/utils'
+import OrderEmptyPlaceholder from './OrderEmptyPlaceholder'
 
 type Props = {
   order_id: string
@@ -35,10 +36,16 @@ export default function OrderContainer(props: Props) {
     return <p>error</p>
   }
 
+  if (!data) {
+    return <OrderEmptyPlaceholder />
+  }
+
+  console.log(data)
+
   const { date, gross_amount, items, token, payment_status, total_quantity } = data as any
 
   const totalOrder = idrFormatter(gross_amount)
-  
+
   return (
     <>
       <h4 className='mb-4'>Product Details</h4>
