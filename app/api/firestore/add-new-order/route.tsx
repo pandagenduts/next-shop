@@ -5,7 +5,6 @@ import { NextResponse } from 'next/server'
 export async function POST(req: Request, res: Response) {
   const body = await req.json()
   const checkoutData = body.checkoutData
-  const token = body.token
   const uid = body.uid
 
   // create document on firestore
@@ -14,7 +13,6 @@ export async function POST(req: Request, res: Response) {
       date: serverTimestamp(),
       gross_amount: checkoutData.gross_amount,
       payment_status: 'pending',
-      token: token,
       items: checkoutData.items,
     })
 

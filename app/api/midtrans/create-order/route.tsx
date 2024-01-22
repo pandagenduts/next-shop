@@ -1,10 +1,11 @@
-import { CartItemsStore } from '@/store/cart-store'
-import ky from 'ky'
 import { NextResponse } from 'next/server'
-import { Api_Midtrans_Generate_Token } from '../generate-token/route'
-import { Api_Midtrans_Generate_Checkout_Data } from '../generate-checkout-data/route'
+import { CartItemsStore } from '@/store/cart-store'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/pages/api/auth/[...nextauth]'
+import { Api_Midtrans_Generate_Token } from '../generate-token/route'
+import { Api_Midtrans_Generate_Checkout_Data } from '../generate-checkout-data/route'
+import ky from 'ky'
+import { UpdateOrder } from '@/lib/actions/firestore/UpdateOrder'
 
 export type Api_Midtrans_Create_Order = {}
 
@@ -23,23 +24,25 @@ export async function POST(req: Request) {
     })
     .json()
 
-  // console.log(checkoutData)
-
-  // midtrans: generate token
-  const token: Api_Midtrans_Generate_Token = await ky
-    .post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/midtrans/generate-token`, { json: checkoutData })
-    .json()
-
-  // console.log(token)
-
   // firestore: add new order document
-  const orderDoc = await ky
+  const orderId: string = await ky
     .post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/firestore/add-new-order`, {
-      json: { uid: uid, checkoutData: checkoutData, token: token.token },
+      json: { uid: uid, checkoutData: checkoutData },
     })
     .json()
 
-  console.log(orderDoc)
+  console.log(orderId)
 
-  return NextResponse.json(orderDoc)
+  // midtrans: generate token
+  const token: Api_Midtrans_Generate_Token = await ky
+    .post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/midtrans/generate-token`, {
+      json: { checkoutData: checkoutData, orderId: orderId },
+    })
+    .json()
+
+  // console.log(token)
+  const update = await UpdateOrder(uid, orderId, { token: token.token })
+  console.log(update)
+
+  return NextResponse.json(orderId)
 }

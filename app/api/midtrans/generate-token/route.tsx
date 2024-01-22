@@ -1,9 +1,7 @@
+const midtransClient = require('midtrans-client') 
 import { NextResponse } from 'next/server'
-const midtransClient = require('midtrans-client')
 import { randomNumber } from '@/lib/faker'
-import ky from 'ky'
 import { Api_Midtrans_Generate_Checkout_Data } from '../generate-checkout-data/route'
-import { CartItemsStore } from '@/store/cart-store'
 
 export type Api_Midtrans_Generate_Token = {
   token: string
@@ -12,8 +10,8 @@ export type Api_Midtrans_Generate_Token = {
 
 export async function POST(req: Request) {
   const body = await req.json()
-  const checkoutData: Api_Midtrans_Generate_Checkout_Data = body
-  
+  const checkoutData: Api_Midtrans_Generate_Checkout_Data = body.checkoutData
+  const orderId = body.orderId
 
   // the Midtrans Part - Generate Token
   let snap = new midtransClient.Snap({
@@ -24,7 +22,7 @@ export async function POST(req: Request) {
 
   let parameter = JSON.stringify({
     transaction_details: {
-      order_id: randomNumber(),
+      order_id: orderId,
       gross_amount: checkoutData.gross_amount,
     },
     item_details: checkoutData.items,
