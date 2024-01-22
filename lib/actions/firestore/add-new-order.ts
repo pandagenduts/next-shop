@@ -9,6 +9,7 @@ export async function addNewOrder(uid: string, checkoutData: Midtrans_Checkout_D
   try {
     const docRef = await addDoc(collection(db, 'users', uid, 'orders'), {
       date: serverTimestamp(),
+      payment_status: 'pending',
       ...checkoutData,
     })
 

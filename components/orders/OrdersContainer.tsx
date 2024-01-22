@@ -38,11 +38,13 @@ export default function OrdersContainer(props: Props) {
     orders.push(data)
   })
 
+  console.log(orders)
+
   return (
     <>
       <div className='flex flex-col gap-4'>
         {orders.length === 0 && <OrdersEmptyPlaceholder />}
-        {orders && orders.map((doc: any) => <OrdersCard key={doc.id} />)}
+        {orders && orders.map((order: any) => <OrdersCard key={order.id} data={order} />)}
       </div>
     </>
   )
