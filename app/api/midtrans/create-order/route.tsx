@@ -2,9 +2,6 @@ import { NextResponse } from 'next/server'
 import { CartItemsStore } from '@/store/cart-store'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/pages/api/auth/[...nextauth]'
-import { Api_Midtrans_Generate_Token } from '../generate-token/route'
-import { Api_Midtrans_Generate_Checkout_Data } from '../generate-checkout-data/route'
-import ky from 'ky'
 import { UpdateOrder } from '@/lib/actions/firestore/update-order'
 import {
   Midtrans_Checkout_Data,
