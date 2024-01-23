@@ -8,6 +8,8 @@ import { getOrder } from '@/lib/actions/firestore/get-order'
 import LoadingSpinner from '@/components/LoadingSpinner'
 import { idrFormatter } from '@/lib/utils'
 import OrderEmptyPlaceholder from './OrderEmptyPlaceholder'
+import OrderStatus from '../OrderStatus'
+import MidtransPayment from './MidtransPayment'
 
 type Props = {
   order_id: string
@@ -54,24 +56,21 @@ export default function OrderContainer(props: Props) {
       </div>
 
       <h4 className='mb-4'>Payment Details</h4>
-      <div>
         <div className='mb-2 flex justify-between'>
           <p>Total Price ({total_quantity} Products)</p>
           <p>{totalOrder}</p>
         </div>
         <div className='flex justify-between'>
           <p>Payment Status</p>
-          {/* <Badge className='font-semibold md:px-4 md:text-sm'>Paid</Badge> */}
-          <Badge className='text-sm font-semibold md:px-4' variant='secondary'>
-            Pending
-          </Badge>
-          {/* <Badge className='font-semibold md:px-4 md:text-sm' variant='outline'>Expired</Badge> */}
+          <OrderStatus status={payment_status} />
         </div>
-        <div className='mt-8 flex justify-between'>
+        
+        <MidtransPayment token={token} />
+        {/* <div className='mt-8 flex justify-between'>
           <p className='mb-2'>Payment Link</p>
           <Button>Click Here</Button>
         </div>
-      </div>
+        <div id='snap-container' className='w-full'></div> */}
     </>
   )
 }
