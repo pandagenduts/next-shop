@@ -1,13 +1,59 @@
 'use client'
 
+import { auth, db } from '@/app/firebase'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { FormEventHandler, useState } from 'react'
 import Link from 'next/link'
-import { FormEventHandler } from 'react'
+import { useRouter } from 'next/navigation'
+import { doc, setDoc } from 'firebase/firestore/lite'
 
-export default function page() {
-  const handleSignup: FormEventHandler = (e) => {
+export default function Page() {
+  const [errorStatus, setErrorStatus] = useState('')
+  const [success, setSuccess] = useState(false)
+  const [signupData, setSignupData] = useState({
+    email: '',
+    password: '',
+  })
+  const router = useRouter()
+
+  const handleSignup: FormEventHandler = async (e) => {
     e.preventDefault()
+    setErrorStatus('')
+    setSuccess(false)
+
+    try {
+      const response = await createUserWithEmailAndPassword(
+        auth,
+        signupData.email,
+        signupData.password,
+      )
+
+      const uid = response.user.uid
+      const email = response.user.email
+
+      // create user document on firestore with uid
+      setDoc(doc(db, 'users', uid), {
+        email: email,
+      })
+        .then(() => {
+          // executed if document successfully created
+          setErrorStatus('')
+          setSuccess(true)
+          setTimeout(() => {
+            router.push('/login')
+          }, 5000)
+        })
+        .catch((error) => {
+          // executed if document failed to create
+          console.log(error)
+          setErrorStatus(error.code)
+        })
+    } catch (error: any) {
+      // console.log(error)
+      setErrorStatus(error.code)
+    }
   }
 
   return (
@@ -22,19 +68,47 @@ export default function page() {
             <label htmlFor='email' className='mb-2 block font-medium'>
               Email address
             </label>
-            <Input type='email' id='email' placeholder='Email' required />
+            <Input
+              type='email'
+              id='email'
+              placeholder='Email'
+              required
+              value={signupData.email}
+              onChange={(e) => {
+                setErrorStatus('')
+                setSignupData((prev) => ({ ...prev, email: e.target.value }))
+              }}
+            />
           </div>
 
-          <div className='mb-6'>
+          <div className='mb-12'>
             <div className='flex justify-between'>
               <label htmlFor='password' className='mb-2 block font-medium'>
                 Password
               </label>
             </div>
-            <Input type='password' id='password' placeholder='Password' required />
+            <Input
+              type='password'
+              id='password'
+              placeholder='Password'
+              required
+              value={signupData.password}
+              onChange={(e) => {
+                setErrorStatus('')
+                setSignupData((prev) => ({ ...prev, password: e.target.value }))
+              }}
+            />
           </div>
 
-          <Button className='mt-6 w-full'>Sign up</Button>
+          {errorStatus && <p className='mb-4 text-center text-destructive'>{errorStatus}</p>}
+          {success && (
+            <p className='mb-4 text-center'>
+              Sign up succeeded! Redirecting you to the log in page...
+            </p>
+          )}
+          <Button className='w-full' disabled={signupData.email == '' || signupData.password == ''}>
+            Sign up
+          </Button>
         </form>
 
         <p className='mt-10 text-center text-sm text-gray-600'>

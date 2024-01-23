@@ -7,7 +7,7 @@ import { profileMenu } from '@/lib/config'
 import { isOrderDetails } from '@/lib/utils'
 
 export default function ProfileNav() {
-  const pathname = usePathname()
+  const pathname = usePathname() as string
 
   const urlSplit = pathname.split('/')
 
