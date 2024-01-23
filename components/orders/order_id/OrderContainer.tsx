@@ -2,12 +2,13 @@
 
 import { useQuery } from '@tanstack/react-query'
 import OrderItem from './OrderItem'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
 import { getOrder } from '@/lib/actions/firestore/get-order'
 import LoadingSpinner from '@/components/LoadingSpinner'
-import { idrFormatter } from '@/lib/utils'
+import { firestoreDateFormatter, idrFormatter } from '@/lib/utils'
 import OrderEmptyPlaceholder from './OrderEmptyPlaceholder'
+import OrderStatus from '../OrderStatus'
+import MidtransPayment from './MidtransPayment'
+import OrderSuccessPlaceholder from './OrderSuccessPlaceholder'
 
 type Props = {
   order_id: string
@@ -43,6 +44,7 @@ export default function OrderContainer(props: Props) {
   const { date, gross_amount, items, token, payment_status, total_quantity } = data as any
 
   const totalOrder = idrFormatter(gross_amount)
+  const formattedDate = firestoreDateFormatter(date)
 
   return (
     <>
@@ -54,24 +56,23 @@ export default function OrderContainer(props: Props) {
       </div>
 
       <h4 className='mb-4'>Payment Details</h4>
-      <div>
-        <div className='mb-2 flex justify-between'>
-          <p>Total Price ({total_quantity} Products)</p>
-          <p>{totalOrder}</p>
-        </div>
-        <div className='flex justify-between'>
-          <p>Payment Status</p>
-          {/* <Badge className='font-semibold md:px-4 md:text-sm'>Paid</Badge> */}
-          <Badge className='text-sm font-semibold md:px-4' variant='secondary'>
-            Pending
-          </Badge>
-          {/* <Badge className='font-semibold md:px-4 md:text-sm' variant='outline'>Expired</Badge> */}
-        </div>
-        <div className='mt-8 flex justify-between'>
-          <p className='mb-2'>Payment Link</p>
-          <Button>Click Here</Button>
-        </div>
+      <div className='mb-2 flex justify-between'>
+        <p>Order Date</p>
+        <p>{formattedDate}</p>
       </div>
+      <div className='mb-2 flex justify-between'>
+        <p>Payment Status</p>
+        <OrderStatus status={payment_status} />
+      </div>
+      <div className='flex justify-between'>
+        <p>Total Price ({total_quantity} Products)</p>
+        <p>{totalOrder}</p>
+      </div>
+
+      {payment_status === 'success' && <OrderSuccessPlaceholder />}
+      {payment_status !== 'success' && payment_status !== 'failure' && (
+        <MidtransPayment token={token} />
+      )}
     </>
   )
 }

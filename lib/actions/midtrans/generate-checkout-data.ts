@@ -1,4 +1,3 @@
-import ky from 'ky'
 import { CartItemsStore } from '@/store/cart-store'
 import { ApiCart } from '@/app/api/cart/route'
 
@@ -11,9 +10,15 @@ export type Midtrans_Checkout_Data = {
 // generate checkout data from zustand cart items store
 
 export async function generateCheckoutData(cartItemsStore: CartItemsStore[]) {
-  const products: ApiCart = await ky
-  .post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/cart`, { json: cartItemsStore })
-  .json()
+  const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/cart`, {
+    body: JSON.stringify(cartItemsStore),
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    }
+  })
+
+  const products: ApiCart = await response.json()
 
   const items = products.items
   const total_price = products.total_price

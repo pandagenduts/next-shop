@@ -24,7 +24,7 @@ export function firstLetterUppercase(str: string) {
 
 export function firestoreDateFormatter(firestoreTimestamp: { seconds: number, nanoseconds: number }): string {
   const date = new Date(firestoreTimestamp.seconds * 1000); // Convert seconds to milliseconds
-  const formattedDate = `${date.getDate()} ${getMonthName(date.getMonth())} ${date.getFullYear()}`;
+  const formattedDate = `${date.getDate()} ${getMonthName(date.getMonth())} ${date.getFullYear()}, ${formatTime(date.getHours())}:${formatTime(date.getMinutes())}`;
 
   function getMonthName(monthIndex: number): string {
     const months = [
@@ -32,6 +32,10 @@ export function firestoreDateFormatter(firestoreTimestamp: { seconds: number, na
       'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
     ];
     return months[monthIndex];
+  }
+
+  function formatTime(time: number): string {
+    return time < 10 ? `0${time}` : `${time}`;
   }
 
   return formattedDate;

@@ -29,7 +29,7 @@ export async function POST(req: Request) {
   const orderId: string = (await addNewOrder(uid, checkoutData)) as string
 
   // midtrans: generate token
-  const token: Midtrans_Generate_Token = await generateToken(checkoutData, orderId)
+  const token: Midtrans_Generate_Token = await generateToken(checkoutData, orderId, uid)
 
   // firestore: add the token to the order document
   const update: string = (await UpdateOrder(uid, orderId, { token: token.token })) as string
