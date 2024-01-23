@@ -1,4 +1,3 @@
-import ky from 'ky'
 import { CartItemsStore } from '@/store/cart-store'
 import { ApiCart } from '@/app/api/cart/route'
 
@@ -19,7 +18,7 @@ export async function generateCheckoutData(cartItemsStore: CartItemsStore[]) {
     }
   })
 
-  const products = await response.json()
+  const products: ApiCart = await response.json()
 
   const items = products.items
   const total_price = products.total_price
