@@ -65,12 +65,7 @@ export default function OrderContainer(props: Props) {
           <OrderStatus status={payment_status} />
         </div>
         
-        <MidtransPayment token={token} />
-        {/* <div className='mt-8 flex justify-between'>
-          <p className='mb-2'>Payment Link</p>
-          <Button>Click Here</Button>
-        </div>
-        <div id='snap-container' className='w-full'></div> */}
+        {payment_status !== 'success' && payment_status !== 'failure' && <MidtransPayment token={token} />}
     </>
   )
 }
