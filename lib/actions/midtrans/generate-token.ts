@@ -28,6 +28,7 @@ export async function generateToken(
       duration: 3,
       unit: 'hours',
     },
+    enabled_payments: ['bca_va'],
   })
 
   const token: Midtrans_Generate_Token = await snap.createTransaction(parameter)
