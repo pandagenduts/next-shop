@@ -8,6 +8,7 @@ import { firestoreDateFormatter, idrFormatter } from '@/lib/utils'
 import OrderEmptyPlaceholder from './OrderEmptyPlaceholder'
 import OrderStatus from '../OrderStatus'
 import MidtransPayment from './MidtransPayment'
+import OrderSuccessPlaceholder from './OrderSuccessPlaceholder'
 
 type Props = {
   order_id: string
@@ -68,19 +69,7 @@ export default function OrderContainer(props: Props) {
         <OrderStatus status={payment_status} />
       </div>
 
-      {payment_status === 'success' && (
-        <>
-          <p className='mt-8 text-center'>
-            Your order has been received. <br />
-            Thank you for trying out my portfolio project!
-          </p>
-
-          <p className='text-center mt-8 font-semibold'>
-            Best, <br />
-            Donny Rendi
-          </p>
-        </>
-      )}
+      {payment_status === 'success' && <OrderSuccessPlaceholder />}
       {payment_status !== 'success' && payment_status !== 'failure' && (
         <MidtransPayment token={token} />
       )}
