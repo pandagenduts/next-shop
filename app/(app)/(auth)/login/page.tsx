@@ -22,7 +22,7 @@ export default function Page() {
     signInWithEmailAndPassword(auth, loginData.email, loginData.password)
       .then((response) => {
         // executed if sign in was successful
-        console.log(response.user)
+        // console.log(response.user)
         // reset all the state
         setErrorStatus('')
         setSuccess(true)
@@ -41,7 +41,7 @@ export default function Page() {
       })
       .catch((error) => {
         // executed if sign in was not successful
-        console.log(error)
+        // console.log(error)
         error.code == 'auth/invalid-credential'
           ? setErrorStatus('The email and password did not match. Please try again.')
           : setErrorStatus(error.code)

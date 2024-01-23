@@ -11,7 +11,7 @@ type Props = {
 export default function OrderItem(props: Props) {
   const data = props.data
   const { thumbnail, quantity, price, name, url } = data
-  console.log(data)
+
   const formattedPrice = idrFormatter(price)
   const totalPrice = idrFormatter(quantity * price)
   return (

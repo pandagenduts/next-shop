@@ -40,8 +40,6 @@ export default function OrderContainer(props: Props) {
     return <OrderEmptyPlaceholder />
   }
 
-  console.log(data)
-
   const { date, gross_amount, items, token, payment_status, total_quantity } = data as any
 
   const totalOrder = idrFormatter(gross_amount)
