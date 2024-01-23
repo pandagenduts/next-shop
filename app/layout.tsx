@@ -7,6 +7,7 @@ import Header from '@/components/layout/Header'
 import { Separator } from '@/components/ui/separator'
 import { Toaster } from 'sonner'
 import Footer from '@/components/layout/Footer'
+import ProgressbarProvider from '@/components/ProgressbarProvider'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
 
@@ -28,7 +29,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <div id='web-wrapper' className='container flex min-h-screen flex-col'>
             <Header />
             <Separator className='hidden md:block' />
-            <main className='flex-1 pb-20 pt-5 md:pt-10'>{children}</main>
+            <main className='flex-1 pb-20 pt-5 md:pt-10'>
+              <ProgressbarProvider>{children}</ProgressbarProvider>
+            </main>
             <Toaster position='top-center' closeButton />
             <Footer />
           </div>
