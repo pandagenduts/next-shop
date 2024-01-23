@@ -40,13 +40,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               <Toaster position='top-center' closeButton />
               <Footer />
             </div>
-            <div id='web-wrapper' className='container flex min-h-screen flex-col'>
-              <Header />
-              <Separator className='hidden md:block' />
-              <main className='flex-1 pb-20 pt-5 md:pt-10'>{children}</main>
-              <Toaster position='top-center' closeButton />
-              <Footer />
-            </div>
           </SessionProvider>
         </ThemeProvider>
       </body>
