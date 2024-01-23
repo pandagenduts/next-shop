@@ -2,8 +2,15 @@ import { NextResponse } from 'next/server'
 import { allProducts } from '@/data/data'
 import { countTotalPrice, countTotalQuantity } from '@/lib/utils'
 
+export type ApiCart = {
+  items: any
+  total_quantity: number
+  total_price: number
+}
+
 export async function POST(req: Request) {
-  const cartItemsStore = await req.json()
+  const body = await req.json()
+  const cartItemsStore = body
 
   if (cartItemsStore.length === 0) {
     return NextResponse.json(
