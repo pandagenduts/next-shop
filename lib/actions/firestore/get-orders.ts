@@ -1,10 +1,10 @@
 import { db } from '@/app/firebase'
-import { collection, getDocs } from 'firebase/firestore/lite'
+import { collection, getDocs, orderBy, query } from 'firebase/firestore/lite'
 
 export async function getOrders(uid: string) {
   try {
     const docRef = collection(db, 'users', uid, 'orders')
-    const documents = await getDocs(docRef)
+    const documents = await getDocs(query(docRef, orderBy('date', 'desc')));
 
     if (documents.docs.length === 0) return null
 
