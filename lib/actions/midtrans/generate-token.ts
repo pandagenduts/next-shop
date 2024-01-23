@@ -11,6 +11,7 @@ export type Midtrans_Generate_Token = {
 export async function generateToken(
   checkoutData: Midtrans_Checkout_Data,
   orderId: string,
+  uid: string,
 ): Promise<Midtrans_Generate_Token> {
   let snap = new midtransClient.Snap({
     isProduction: false,
@@ -29,6 +30,7 @@ export async function generateToken(
       unit: 'hours',
     },
     enabled_payments: ['bca_va'],
+    user_id: uid,
   })
 
   const token: Midtrans_Generate_Token = await snap.createTransaction(parameter)

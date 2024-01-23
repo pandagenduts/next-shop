@@ -1,8 +1,9 @@
 'use client'
 
+import { db } from '@/app/firebase'
 import { Button } from '@/components/ui/button'
 import useCartStore from '@/store/cart-store'
-import { DocumentReference } from 'firebase/firestore/lite'
+import { DocumentReference, doc, getDoc } from 'firebase/firestore/lite'
 import ky from 'ky'
 import { useEffect } from 'react'
 
@@ -54,7 +55,9 @@ export default function Page() {
 
   const handleCreateDocument = async () => {
     try {
-      const addDocument: DocumentReference = await ky.post('/api/midtrans/create-order', { json: cartItemsStore }).json()
+      const addDocument: DocumentReference = await ky
+        .post('/api/midtrans/create-order', { json: cartItemsStore })
+        .json()
 
       console.log(addDocument)
     } catch (error) {
