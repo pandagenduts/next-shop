@@ -61,12 +61,12 @@ export default function OrderContainer(props: Props) {
         <p>{formattedDate}</p>
       </div>
       <div className='mb-2 flex justify-between'>
-        <p>Total Price ({total_quantity} Products)</p>
-        <p>{totalOrder}</p>
-      </div>
-      <div className='flex justify-between'>
         <p>Payment Status</p>
         <OrderStatus status={payment_status} />
+      </div>
+      <div className='flex justify-between'>
+        <p>Total Price ({total_quantity} Products)</p>
+        <p>{totalOrder}</p>
       </div>
 
       {payment_status === 'success' && <OrderSuccessPlaceholder />}
