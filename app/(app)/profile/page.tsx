@@ -1,9 +1,8 @@
 'use client'
 
-import { db } from '@/app/firebase'
 import { Button } from '@/components/ui/button'
 import useCartStore from '@/store/cart-store'
-import { DocumentReference, doc, getDoc } from 'firebase/firestore/lite'
+import { DocumentReference } from 'firebase/firestore/lite'
 import ky from 'ky'
 import { useEffect } from 'react'
 

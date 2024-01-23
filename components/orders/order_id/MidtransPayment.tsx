@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button'
-import { useEffect, useLayoutEffect } from 'react'
+import { useLayoutEffect } from 'react'
 
 type Props = {
   token: string
@@ -7,8 +7,6 @@ type Props = {
 
 export default function MidtransPayment(props: Props) {
   const token = props.token
-
-  console.log(token)
 
   const handleMidtransSnap = () => {
     window.snap.embed(token, {

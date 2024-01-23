@@ -2,8 +2,6 @@
 
 import { useQuery } from '@tanstack/react-query'
 import OrderItem from './OrderItem'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
 import { getOrder } from '@/lib/actions/firestore/get-order'
 import LoadingSpinner from '@/components/LoadingSpinner'
 import { idrFormatter } from '@/lib/utils'
