@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query'
 import OrderItem from './OrderItem'
 import { getOrder } from '@/lib/actions/firestore/get-order'
 import LoadingSpinner from '@/components/LoadingSpinner'
-import { idrFormatter } from '@/lib/utils'
+import { firestoreDateFormatter, idrFormatter } from '@/lib/utils'
 import OrderEmptyPlaceholder from './OrderEmptyPlaceholder'
 import OrderStatus from '../OrderStatus'
 import MidtransPayment from './MidtransPayment'
@@ -43,6 +43,7 @@ export default function OrderContainer(props: Props) {
   const { date, gross_amount, items, token, payment_status, total_quantity } = data as any
 
   const totalOrder = idrFormatter(gross_amount)
+  const formattedDate = firestoreDateFormatter(date)
 
   return (
     <>
@@ -54,16 +55,35 @@ export default function OrderContainer(props: Props) {
       </div>
 
       <h4 className='mb-4'>Payment Details</h4>
-        <div className='mb-2 flex justify-between'>
-          <p>Total Price ({total_quantity} Products)</p>
-          <p>{totalOrder}</p>
-        </div>
-        <div className='flex justify-between'>
-          <p>Payment Status</p>
-          <OrderStatus status={payment_status} />
-        </div>
-        
-        {payment_status !== 'success' && payment_status !== 'failure' && <MidtransPayment token={token} />}
+      <div className='mb-2 flex justify-between'>
+        <p>Order Date</p>
+        <p>{formattedDate}</p>
+      </div>
+      <div className='mb-2 flex justify-between'>
+        <p>Total Price ({total_quantity} Products)</p>
+        <p>{totalOrder}</p>
+      </div>
+      <div className='flex justify-between'>
+        <p>Payment Status</p>
+        <OrderStatus status={payment_status} />
+      </div>
+
+      {payment_status === 'success' && (
+        <>
+          <p className='mt-8 text-center'>
+            Your order has been received. <br />
+            Thank you for trying out my portfolio project!
+          </p>
+
+          <p className='text-center mt-8 font-semibold'>
+            Best, <br />
+            Donny Rendi
+          </p>
+        </>
+      )}
+      {payment_status !== 'success' && payment_status !== 'failure' && (
+        <MidtransPayment token={token} />
+      )}
     </>
   )
 }
