@@ -5,7 +5,6 @@ const midtransClient = require('midtrans-client')
 export async function POST(req: Request) {
   const body = await req.json()
   const notificationJson = body
-  console.log(body)
 
   let apiClient = new midtransClient.Snap({
     isProduction: false,
