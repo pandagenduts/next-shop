@@ -16,6 +16,7 @@ import {
   LogOut as LogOutIcon,
 } from 'lucide-react'
 import { useState } from 'react'
+import { signOutNextAuthFirebase } from '@/lib/actions/auth/sign-out-next-auth-firebase'
 
 const menu = [
   {
@@ -55,7 +56,10 @@ export default function UserAccountNav() {
           </DropdownMenuItem>
         ))}
         <DropdownMenuSeparator />
-        <DropdownMenuItem className='cursor-pointer' onClick={handleClose}>
+        <DropdownMenuItem className='cursor-pointer' onClick={() => {
+          handleClose()
+          signOutNextAuthFirebase()
+        }}>
           <LogOutIcon className='mr-2 h-4 w-4' />
           Sign Out
         </DropdownMenuItem>

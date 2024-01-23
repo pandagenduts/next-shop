@@ -18,6 +18,25 @@ export function idrFormatter(num: number) {
   }).format(num)
 }
 
+export function firstLetterUppercase(str: string) {
+  return str.charAt(0).toUpperCase() + str.slice(1)
+}
+
+export function firestoreDateFormatter(firestoreTimestamp: { seconds: number, nanoseconds: number }): string {
+  const date = new Date(firestoreTimestamp.seconds * 1000); // Convert seconds to milliseconds
+  const formattedDate = `${date.getDate()} ${getMonthName(date.getMonth())} ${date.getFullYear()}`;
+
+  function getMonthName(monthIndex: number): string {
+    const months = [
+      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+    ];
+    return months[monthIndex];
+  }
+
+  return formattedDate;
+}
+
 export function extractProductsId(cartItemsStore: CartItemsStore[]) {
   const productId: number[] = []
 
