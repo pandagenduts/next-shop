@@ -16,6 +16,7 @@ import useCartStore from '@/store/cart-store'
 import { idrFormatter } from '@/lib/utils'
 import { ProductType } from '@/lib/types'
 import ky from 'ky'
+import Checkout from './Checkout'
 
 export type ExtendedCartItems = ProductType & {
   quantity: number
@@ -88,7 +89,7 @@ export default function CartButtonServer() {
               <p className='mb-5 text-center text-xs text-gray-500'>
                 Shipping, taxes, and discount codes calculated at checkout.
               </p>
-              <Button className='w-full'>Checkout</Button>
+              <Checkout />
             </div>
           </div>
         )}
