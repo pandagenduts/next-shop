@@ -20,6 +20,11 @@ export default async function middleware(req: NextRequest) {
       url.pathname = '/login'
       return NextResponse.redirect(url)
     }
+    else if (pathname === '/transaction') {
+      let url = req.nextUrl.clone()
+      url.pathname = '/'
+      return NextResponse.redirect(url)
+    }
   }
 }
 

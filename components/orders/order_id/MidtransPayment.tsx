@@ -55,8 +55,7 @@ export default function MidtransPayment(props: Props) {
       {isOpen && (
         <>
           <p className='mt-8 text-center'>
-            You can simply
-            <strong>simulate the payment using the tools below the Midtrans section.</strong>
+            You can simply <strong>simulate the payment using the tools below the Midtrans section.</strong>
           </p>
           <p className='mb-8 mt-4 text-center'>
             Anyway, hey, thank you for checking my app out! ^^
