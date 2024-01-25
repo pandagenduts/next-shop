@@ -16,13 +16,14 @@ export default function MidtransPayment(props: Props) {
     window.snap.embed(token, {
       embedId: 'snap-container',
       onSuccess: function (result: any) {
-        toast.success('Payment success!')
+        setIsOpen(false)
+        alert('payment success!')
       },
       onPending: function (result: any) {
-        toast('Waiting for payment...')
+        alert('Waiting for payment...')
       },
       onError: function (result: any) {
-        toast.error('Payment failed somehow..')
+        alert('Payment failed somehow..')
       },
       onClose: function () {
         toast('Midtrans payment closed')
