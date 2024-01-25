@@ -1,7 +1,6 @@
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { useLayoutEffect, useState } from 'react'
-import { toast } from 'sonner'
 
 type Props = {
   token: string
@@ -16,16 +15,20 @@ export default function MidtransPayment(props: Props) {
     window.snap.embed(token, {
       embedId: 'snap-container',
       onSuccess: function (result: any) {
-        toast.success('Payment success!')
+        setIsOpen(false)
+        alert('Payment success!')
       },
       onPending: function (result: any) {
-        toast('Waiting for payment...')
+        setIsOpen(false)
+        alert('Waiting for payment...')
       },
       onError: function (result: any) {
-        toast.error('Payment failed somehow..')
+        setIsOpen(false)
+        alert('Payment failed somehow..')
       },
       onClose: function () {
-        toast('Midtrans payment closed')
+        setIsOpen(false)
+        alert('Midtrans payment closed.')
       },
     })
   }
@@ -43,15 +46,16 @@ export default function MidtransPayment(props: Props) {
   }, [])
   return (
     <>
-      <div className='my-8 flex justify-between'>
-        <p className='mb-2'>Payment Link</p>
-        <Button onClick={handleMidtransSnap}>Click Here</Button>
-      </div>
+      {!isOpen && (
+        <div className='my-8 flex justify-between'>
+          <p className='mb-2'>Payment Link</p>
+          <Button onClick={handleMidtransSnap}>Click Here</Button>
+        </div>
+      )}
       {isOpen && (
         <>
-          <p className='text-center'>
-            You can simply{' '}
-            <strong>simulate the payment using the tools below the Midtrans section.</strong>
+          <p className='mt-8 text-center'>
+            You can simply <strong>simulate the payment using the tools below the Midtrans section.</strong>
           </p>
           <p className='mb-8 mt-4 text-center'>
             Anyway, hey, thank you for checking my app out! ^^
@@ -59,14 +63,14 @@ export default function MidtransPayment(props: Props) {
         </>
       )}
 
-      <div id='snap-container' className='w-full'></div>
+      <div id='snap-container' className={`w-full ${isOpen ? 'border' : ''}`}></div>
 
       {isOpen && (
         <>
           <Separator className='my-8' />
           <p className='mb-4 text-center font-bold'>Copy the VA number above ☝</p>
           <p className='mb-4 text-center font-bold'>Simulate the payment here 👇</p>
-          <div className='overflow-hidden -mb-28'>
+          <div className='-mb-28 overflow-hidden'>
             <iframe
               src='https://simulator.sandbox.midtrans.com/bca/va/index'
               title='Midtrans Payment Mock Simulator'

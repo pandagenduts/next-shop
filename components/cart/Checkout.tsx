@@ -17,7 +17,6 @@ export default function Checkout(props: Props) {
   const router = useRouter()
 
   const handleCheckout = async () => {
-    console.log('checkout')
     handleIsFetching(true)
     try {
       const newOrder: { orderId: string } = await ky
