@@ -71,7 +71,7 @@ export default function OrderContainer(props: Props) {
 
       {payment_status === 'success' && <OrderSuccessPlaceholder />}
       {payment_status !== 'success' && payment_status !== 'failure' && (
-        <MidtransPayment token={token} />
+        <MidtransPayment token={token} order_id={order_id} />
       )}
     </>
   )
