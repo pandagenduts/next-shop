@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button'
 import useCartStore from '@/store/cart-store'
 import { DocumentReference } from 'firebase/firestore/lite'
 import ky from 'ky'
+import { toast } from 'sonner'
 
 type Token = {
   token: string
@@ -11,7 +12,7 @@ type Token = {
 }
 
 export default function Page() {
-  const { cartItemsStore } = useCartStore()
+  const { cartItemsStore, clearCart } = useCartStore()
 
   const handleCreateDocument = async () => {
     try {
@@ -25,6 +26,11 @@ export default function Page() {
     }
   }
 
+  const handleClearCart = () => {
+    clearCart()
+    toast.success('cart cleared!')
+  }
+
   return (
     <>
       <h4>Profile</h4>
@@ -32,6 +38,9 @@ export default function Page() {
 
       <Button className='mt-8' onClick={handleCreateDocument}>
         Create Order
+      </Button>
+      <Button onClick={handleClearCart}>
+        Clear Cart
       </Button>
     </>
   )
