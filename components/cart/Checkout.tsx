@@ -25,7 +25,6 @@ export default function Checkout(props: Props) {
         .json()
 
       // executed if order is successfully created
-      console.log(newOrder)
       handleIsFetching(false)
       handleSheetClose()
       clearCart()
