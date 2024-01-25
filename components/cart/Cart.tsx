@@ -40,6 +40,10 @@ export default function CartButtonServer() {
 
   const handleClose = () => setIsOpen(false)
 
+  const handleIsFetching = (state: boolean) => {
+    setIsFetching(state)
+  }
+
   useEffect(() => {
     ;(async () => {
       setIsFetching(true)
@@ -89,7 +93,7 @@ export default function CartButtonServer() {
               <p className='mb-5 text-center text-xs text-gray-500'>
                 Shipping, taxes, and discount codes calculated at checkout.
               </p>
-              <Checkout />
+              <Checkout isFetching={isFetching} handleIsFetching={handleIsFetching} handleSheetClose={handleClose} />
             </div>
           </div>
         )}
