@@ -1,14 +1,18 @@
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
+import { useRouter } from 'next/navigation'
 import { useLayoutEffect, useState } from 'react'
+
 
 type Props = {
   token: string
+  order_id: string
 }
 
 export default function MidtransPayment(props: Props) {
   const [isOpen, setIsOpen] = useState(false)
-  const token = props.token
+  const {token, order_id} = props
+  const router = useRouter()
 
   const handleMidtransSnap = () => {
     setIsOpen(true)
@@ -17,18 +21,22 @@ export default function MidtransPayment(props: Props) {
       onSuccess: function (result: any) {
         setIsOpen(false)
         alert('Payment success!')
+        router.push(`/transaction-status?order_id=${order_id}&status_code=200&transaction_status=settlement`)
       },
       onPending: function (result: any) {
         setIsOpen(false)
         alert('Waiting for payment...')
+        window.location.reload()
       },
       onError: function (result: any) {
         setIsOpen(false)
         alert('Payment failed somehow..')
+        window.location.reload()
       },
       onClose: function () {
         setIsOpen(false)
         alert('Midtrans payment closed.')
+        window.location.reload()
       },
     })
   }
