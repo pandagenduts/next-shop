@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { useLayoutEffect, useState } from 'react'
+import { toast } from 'sonner'
 
 type Props = {
   token: string
@@ -15,18 +16,17 @@ export default function MidtransPayment(props: Props) {
     window.snap.embed(token, {
       embedId: 'snap-container',
       onSuccess: function (result: any) {
-        alert('payment success!')
-        console.log(result)
+        toast.success('Payment success!')
       },
       onPending: function (result: any) {
-        alert('wating your payment!')
-        console.log(result)
+        toast('Waiting for payment...')
       },
       onError: function (result: any) {
-        alert('payment failed!')
-        console.log(result)
+        toast.error('Payment failed somehow..')
       },
-      onClose: function () {},
+      onClose: function () {
+        toast('Midtrans payment closed')
+      },
     })
   }
 
