@@ -13,7 +13,11 @@ export async function POST(req: Request) {
     clientKey: process.env.NEXT_PUBLIC_MIDTRANS_CLIENT,
   })
 
-  apiClient.transaction.notification(notificationJson).then((statusResponse: any) => {
+  const successResponse = NextResponse.json({ success: true }, { status: 200 })
+  const failResponse = NextResponse.json({ success: false }, { status: 500 })
+  
+  try {
+    const statusResponse = await apiClient.transaction.notification(notificationJson);
     let orderId = statusResponse.order_id
     let transactionStatus = statusResponse.transaction_status
     let fraudStatus = statusResponse.fraud_status
@@ -24,33 +28,26 @@ export async function POST(req: Request) {
     )
 
     // Sample transactionStatus handling logic
-
-    if (transactionStatus == 'capture') {
-      // capture only applies to card transaction, which you need to check for the fraudStatus
-      if (fraudStatus == 'challenge') {
-        // TODO set transaction status on your databaase to 'challenge'
-      } else if (fraudStatus == 'accept') {
-        // TODO set transaction status on your databaase to 'success'
-      }
-    } else if (transactionStatus == 'settlement') {
-      // TODO set transaction status on your databaase to 'success'
-      UpdateOrder(uid, orderId, { payment_status: 'success' })
-        .then((res) => 'update success')
-        .catch((err) => console.log(err))
+    if (transactionStatus == 'settlement') {
+      // TODO set transaction status on your database to 'success'
+      await UpdateOrder(uid, orderId, { payment_status: 'success' });
+      return NextResponse.json({ success: true }, { status: 200 });
     } else if (transactionStatus == 'deny') {
-      // TODO you can ignore 'deny', because most of the time it allows payment retries
-      // and later can become success
+      // TODO you can ignore 'deny'
+      return NextResponse.json({ success: true }, { status: 200 });
     } else if (transactionStatus == 'cancel' || transactionStatus == 'expire') {
-      // TODO set transaction status on your databaase to 'failure'
-      UpdateOrder(uid, orderId, { payment_status: 'failure' })
-        .then((res) => 'update success')
-        .catch((err) => console.log(err))
+      // TODO set transaction status on your database to 'failure'
+      await UpdateOrder(uid, orderId, { payment_status: 'failure' });
+      return NextResponse.json({ success: true }, { status: 200 });
     } else if (transactionStatus == 'pending') {
-      // TODO set transaction status on your databaase to 'pending' / waiting payment
-      UpdateOrder(uid, orderId, { payment_status: 'pending' })
-        .then((res) => 'update success')
-        .catch((err) => console.log(err))
+      // TODO set transaction status on your database to 'pending' / waiting payment
+      await UpdateOrder(uid, orderId, { payment_status: 'pending' });
+      return NextResponse.json({ success: true }, { status: 200 });
     }
-  })
-  return NextResponse.json({ success: true }, { status: 200 })
+
+    return NextResponse.json({ success: true }, { status: 200 });
+  } catch (error) {
+    console.log(error);
+    return NextResponse.json({ success: false }, { status: 500 });
+  }
 }
