@@ -11,6 +11,7 @@ type CartState = {
   cartItemsStore: CartItemsStore[]
   addItemToCart: (id: number) => void
   removeItemFromCart: (id: number) => void
+  clearCart: () => void
 }
 
 const useCartStore = create(
@@ -19,9 +20,7 @@ const useCartStore = create(
       cartItemsStore: [],
       addItemToCart: (id) => {
         const currentItems = get().cartItemsStore
-        const itemExist = currentItems.find(
-          (currentItem) => currentItem.id === id,
-        )
+        const itemExist = currentItems.find((currentItem) => currentItem.id === id)
 
         if (itemExist) {
           const updatedItems = currentItems.map((currentItem) => {
@@ -38,9 +37,7 @@ const useCartStore = create(
       },
       removeItemFromCart: (id) => {
         const currentItems = get().cartItemsStore
-        const itemExist = currentItems.find(
-          (currentItem) => currentItem.id === id,
-        )!
+        const itemExist = currentItems.find((currentItem) => currentItem.id === id)!
 
         if (itemExist.quantity > 1) {
           const updatedItems = currentItems.map((currentItem) => {
@@ -52,13 +49,14 @@ const useCartStore = create(
 
           set({ cartItemsStore: updatedItems })
         } else {
-          const updatedItems = currentItems.filter(
-            (currentItem) => currentItem.id !== id,
-          )
+          const updatedItems = currentItems.filter((currentItem) => currentItem.id !== id)
 
           set({ cartItemsStore: updatedItems })
           toast.success('Item removed from the cart!')
         }
+      },
+      clearCart: () => {
+        set({ cartItemsStore: [] })
       },
     }),
     {
