@@ -1,9 +1,9 @@
 import useCartStore from '@/store/cart-store'
 import { Button } from '@/components/ui/button'
-import LoadingSpinner from '../LoadingSpinner'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 import ky from 'ky'
+import LoadingText from '../LoadingText'
 
 type Props = {
   isFetching: boolean
@@ -40,9 +40,7 @@ export default function Checkout(props: Props) {
     <>
       <Button className='w-full' disabled={isFetching} onClick={handleCheckout}>
         {isFetching ? (
-          <p className='flex gap-4'>
-            <LoadingSpinner /> Loading...
-          </p>
+          <LoadingText />
         ) : (
           'Checkout'
         )}
