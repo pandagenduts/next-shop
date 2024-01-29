@@ -69,7 +69,7 @@ export default function CartButtonServer() {
 
   useEffect(() => {
     mutate()
-  }, [cartItemsStore])
+  }, [cartItemsStore, mutate])
 
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
