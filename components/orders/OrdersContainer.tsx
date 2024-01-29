@@ -4,7 +4,7 @@ import OrdersCard from './OrdersCard'
 import OrdersEmptyPlaceholder from './OrdersEmptyPlaceholder'
 import { useQuery } from '@tanstack/react-query'
 import { getOrders } from '@/lib/actions/firestore/get-orders'
-import LoadingSpinner from '../LoadingSpinner'
+import LoadingText from '../LoadingText'
 
 type Props = {
   uid: string
@@ -25,9 +25,7 @@ export default function OrdersContainer(props: Props) {
   if (isLoading) {
     return (
       <div className='flex w-full justify-center pt-8'>
-        <p className='flex gap-4'>
-          <LoadingSpinner /> Loading...
-        </p>
+        <LoadingText />
       </div>
     )
   }

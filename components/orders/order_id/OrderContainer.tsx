@@ -3,12 +3,12 @@
 import { useQuery } from '@tanstack/react-query'
 import OrderItem from './OrderItem'
 import { getOrder } from '@/lib/actions/firestore/get-order'
-import LoadingSpinner from '@/components/LoadingSpinner'
 import { firestoreDateFormatter, idrFormatter } from '@/lib/utils'
 import OrderEmptyPlaceholder from './OrderEmptyPlaceholder'
 import OrderStatus from '../OrderStatus'
 import MidtransPayment from './MidtransPayment'
 import OrderSuccessPlaceholder from './OrderSuccessPlaceholder'
+import LoadingText from '@/components/LoadingText'
 
 type Props = {
   order_id: string
@@ -26,9 +26,7 @@ export default function OrderContainer(props: Props) {
   if (isLoading) {
     return (
       <div className='flex w-full justify-center pt-8'>
-        <p className='flex gap-4'>
-          <LoadingSpinner /> Loading...
-        </p>
+        <LoadingText />
       </div>
     )
   }

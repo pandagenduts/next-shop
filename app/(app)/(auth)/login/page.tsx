@@ -7,10 +7,13 @@ import { signInWithEmailAndPassword } from 'firebase/auth'
 import { FormEventHandler, useState } from 'react'
 import Link from 'next/link'
 import { signIn } from 'next-auth/react'
+import LoadingSpinner from '@/components/LoadingSpinner'
+import LoadingText from '@/components/LoadingText'
 
 export default function Page() {
   const [errorStatus, setErrorStatus] = useState('')
   const [success, setSuccess] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   const [loginData, setLoginData] = useState({
     email: '',
     password: '',
@@ -19,11 +22,13 @@ export default function Page() {
   const handleLogin: FormEventHandler = (e) => {
     e.preventDefault()
 
+    setIsLoading(true)
     signInWithEmailAndPassword(auth, loginData.email, loginData.password)
       .then((response) => {
         // executed if sign in was successful
         // console.log(response.user)
         // reset all the state
+        setIsLoading(false)
         setErrorStatus('')
         setSuccess(true)
         setLoginData({
@@ -42,6 +47,7 @@ export default function Page() {
       .catch((error) => {
         // executed if sign in was not successful
         // console.log(error)
+        setIsLoading(false)
         error.code == 'auth/invalid-credential'
           ? setErrorStatus('The email and password did not match. Please try again.')
           : setErrorStatus(error.code)
@@ -101,8 +107,15 @@ export default function Page() {
               Log in succeeded! Redirecting you to the home page...
             </p>
           )}
-          <Button className='w-full' disabled={loginData.email == '' || loginData.password == ''}>
-            Log in
+          <Button
+            className='w-full'
+            disabled={isLoading || loginData.email == '' || loginData.password == ''}
+          >
+            {isLoading ? (
+              <LoadingText />
+            ) : (
+              'Log in'
+            )}
           </Button>
         </form>
 

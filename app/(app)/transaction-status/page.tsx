@@ -16,7 +16,6 @@ export default function Page({
   const router = useRouter()
 
   if (!order_id || !status_code || !transaction_status) {
-    console.log('one is missing')
     router.replace('/')
   }
 
@@ -29,7 +28,7 @@ export default function Page({
     }
   }, [countDown])
 
-  if(countDown === 0) {
+  if (countDown === 0) {
     router.replace(`/profile/orders/${order_id}`)
   }
 
@@ -38,13 +37,11 @@ export default function Page({
       <section className='flex h-full flex-col items-center pt-20'>
         <CheckCircle className='mb-2 h-20 w-20 text-green-500' />
         <h2 className='mb-8 text-green-500'>Success</h2>
-        <h3 className='mb-8'>Your payment has been processed successfully.</h3>
+        <h3 className='mb-8 text-center'>Your payment has been processed successfully.</h3>
         <p className='mb-8'>
           <strong>Order ID</strong>: {order_id}
         </p>
-        <p className='mb-4'>
-          Page will be redirected in {countDown} seconds...
-        </p>
+        <p className='mb-4'>Page will be redirected in {countDown} seconds...</p>
         <p className='mb-12'>Or you can click the button bellow</p>
         <Button>
           <Link href={`/profile/orders/${order_id}`}>Go to Order</Link>
@@ -56,13 +53,11 @@ export default function Page({
       <section className='flex h-full flex-col items-center pt-20'>
         <CircleEllipsis className='mb-2 h-20 w-20 text-slate-400' />
         <h2 className='mb-8 text-slate-400'>Pending</h2>
-        <h3 className='mb-8'>Seems like your payment is still pending.</h3>
+        <h3 className='mb-8 text-center'>Seems like your payment is still pending.</h3>
         <p className='mb-8'>
           <strong>Order ID</strong>: {order_id}
         </p>
-        <p className='mb-4'>
-          Page will be redirected in {countDown} seconds...
-        </p>
+        <p className='mb-4'>Page will be redirected in {countDown} seconds...</p>
         <p className='mb-12'>Or you can click the button bellow</p>
         <Button>
           <Link href={`/profile/orders/${order_id}`}>Finish Payment</Link>

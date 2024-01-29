@@ -1,9 +1,10 @@
 import useCartStore from '@/store/cart-store'
 import { Button } from '@/components/ui/button'
-import LoadingSpinner from '../LoadingSpinner'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 import ky from 'ky'
+import LoadingText from '../LoadingText'
+import { useSession } from 'next-auth/react'
 
 type Props = {
   isFetching: boolean
@@ -15,8 +16,16 @@ export default function Checkout(props: Props) {
   const { isFetching, handleIsFetching, handleSheetClose } = props
   const { cartItemsStore, clearCart } = useCartStore()
   const router = useRouter()
+  const session = useSession()
 
   const handleCheckout = async () => {
+    if (!session.data) {
+      handleSheetClose()
+      toast.info('Please login before proceed to checkout.')
+      router.push('/login')
+      return
+    }
+
     handleIsFetching(true)
     try {
       const newOrder: { orderId: string } = await ky
@@ -39,13 +48,7 @@ export default function Checkout(props: Props) {
   return (
     <>
       <Button className='w-full' disabled={isFetching} onClick={handleCheckout}>
-        {isFetching ? (
-          <p className='flex gap-4'>
-            <LoadingSpinner /> Loading...
-          </p>
-        ) : (
-          'Checkout'
-        )}
+        {isFetching ? <LoadingText /> : 'Checkout'}
       </Button>
     </>
   )

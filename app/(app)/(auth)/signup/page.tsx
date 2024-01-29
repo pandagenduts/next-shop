@@ -8,10 +8,12 @@ import { FormEventHandler, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { doc, setDoc } from 'firebase/firestore/lite'
+import LoadingText from '@/components/LoadingText'
 
 export default function Page() {
   const [errorStatus, setErrorStatus] = useState('')
   const [success, setSuccess] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   const [signupData, setSignupData] = useState({
     email: '',
     password: '',
@@ -22,6 +24,7 @@ export default function Page() {
     e.preventDefault()
     setErrorStatus('')
     setSuccess(false)
+    setIsLoading(true)
 
     try {
       const response = await createUserWithEmailAndPassword(
@@ -41,6 +44,7 @@ export default function Page() {
           // executed if document successfully created
           setErrorStatus('')
           setSuccess(true)
+          setIsLoading(false)
           setTimeout(() => {
             router.push('/login')
           }, 5000)
@@ -49,9 +53,11 @@ export default function Page() {
           // executed if document failed to create
           console.log(error)
           setErrorStatus(error.code)
+          setIsLoading(false)
         })
     } catch (error: any) {
       // console.log(error)
+      setIsLoading(false)
       setErrorStatus(error.code)
     }
   }
@@ -106,8 +112,11 @@ export default function Page() {
               Sign up succeeded! Redirecting you to the log in page...
             </p>
           )}
-          <Button className='w-full' disabled={signupData.email == '' || signupData.password == ''}>
-            Sign up
+          <Button
+            className='w-full'
+            disabled={isLoading || signupData.email == '' || signupData.password == ''}
+          >
+            {isLoading ? <LoadingText /> : 'Sign up'}
           </Button>
         </form>
 

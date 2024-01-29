@@ -17,6 +17,7 @@ import { idrFormatter } from '@/lib/utils'
 import { ProductType } from '@/lib/types'
 import ky from 'ky'
 import Checkout from './Checkout'
+import { useMutation } from '@tanstack/react-query'
 
 export type ExtendedCartItems = ProductType & {
   quantity: number
@@ -38,6 +39,28 @@ export default function CartButtonServer() {
     total_price: 0,
   })
 
+  const { mutate, isPending, isError, error } = useMutation({
+    mutationFn: async () => {
+      try {
+        const res = await ky.post(`/api/cart`, { json: cartItemsStore }).json()
+
+        return res
+      } catch (error) {
+        return error
+      }
+    },
+    onSuccess: (data) => {
+      setCartItems(data as CartItems)
+      setIsFetching(false)
+    },
+    onError: () => {
+      setIsFetching(false)
+    },
+    onMutate: () => {
+      setIsFetching(true)
+    },
+  })
+
   const handleClose = () => setIsOpen(false)
 
   const handleIsFetching = (state: boolean) => {
@@ -45,20 +68,8 @@ export default function CartButtonServer() {
   }
 
   useEffect(() => {
-    ;(async () => {
-      setIsFetching(true)
-      ky.post(`/api/cart`, { json: cartItemsStore })
-        .json()
-        .then((data) => {
-          setCartItems(data as CartItems)
-          setIsFetching(false)
-        })
-        .catch((err) => {
-          setIsFetching(false)
-          console.log(err)
-        })
-    })()
-  }, [cartItemsStore])
+    mutate()
+  }, [cartItemsStore, mutate])
 
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
@@ -93,7 +104,11 @@ export default function CartButtonServer() {
               <p className='mb-5 text-center text-xs text-gray-500'>
                 Shipping, taxes, and discount codes calculated at checkout.
               </p>
-              <Checkout isFetching={isFetching} handleIsFetching={handleIsFetching} handleSheetClose={handleClose} />
+              <Checkout
+                isFetching={isFetching}
+                handleIsFetching={handleIsFetching}
+                handleSheetClose={handleClose}
+              />
             </div>
           </div>
         )}
