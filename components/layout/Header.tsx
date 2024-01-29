@@ -7,6 +7,7 @@ import DesktopMenu from './DesktopMenu'
 import Cart from '../cart/Cart'
 import LoginButton from './LoginButton'
 import { useSession } from 'next-auth/react'
+import TanstackQueryProvier from '../TanstackQueryProvier'
 
 export default function Header() {
   const session = useSession()
@@ -25,7 +26,9 @@ export default function Header() {
       </div>
 
       <div className='flex items-center gap-4'>
-        <Cart />
+        <TanstackQueryProvier>
+          <Cart />
+        </TanstackQueryProvier>
 
         {session.status === 'unauthenticated' ? <LoginButton /> : <UserAccountNav />}
       </div>
