@@ -13,7 +13,7 @@ export default function OrderStatus(props: Props) {
   if (status === 'pending') {
     variant = 'secondary'
   } else if (status === 'failure') {
-    variant = 'outline'
+    variant = 'destructive'
   } else if (status === 'success') {
     variant = 'default'
   }
