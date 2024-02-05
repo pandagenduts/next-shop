@@ -1,6 +1,6 @@
 # NextShop
 
-A simple eshop with Next JS, Firebase (Auth & Firestore), and Midtrans Payment Gateway
+A simple eshop with Next JS, Zustand, Shadcn UI, Firebase (Auth & Firestore), and Midtrans Payment Gateway
 
 
 ## Tech Stack
@@ -8,6 +8,8 @@ A simple eshop with Next JS, Firebase (Auth & Firestore), and Midtrans Payment G
 - [Next.js](https://nextjs.org)
 - [Next Auth](https://next-auth.js.org)
 - [Tailwind CSS](https://tailwindcss.com)
+- [Zustand](https://docs.pmnd.rs/zustand/getting-started/introduction)
+- [ShadCN UI](https://ui.shadcn.com/)
 - [Firebase Auth](https://firebase.google.com/docs/auth)
 - [Firestore](https://firebase.google.com/docs/firestore)
 - [Midtrans](https://midtrans.com/)
